@@ -1,4 +1,4 @@
-import 'package:digikala/widgets/Home_PageView.dart';
+import 'package:digikala/widgets/Home_HorizontalList.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: HomePageView()),
+      body: Center(child: HorizontalList()),
     );
   }
 }
