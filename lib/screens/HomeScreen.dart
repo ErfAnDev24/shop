@@ -1,3 +1,4 @@
+import 'package:digikala/widgets/Home_PageView.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,10 +11,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hello ErfAn Shop'),
-      ),
+    return Scaffold(
+      body: Center(child: HomePageView()),
     );
   }
 }
