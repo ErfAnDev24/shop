@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class HorizontalList extends StatefulWidget {
-  const HorizontalList({super.key});
+class CategoryList extends StatefulWidget {
+  const CategoryList({super.key});
 
   @override
-  State<HorizontalList> createState() => _HorizontalListState();
+  State<CategoryList> createState() => _CategoryListState();
 }
 
-class _HorizontalListState extends State<HorizontalList> {
+class _CategoryListState extends State<CategoryList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 90,
       child: Padding(
-        padding: EdgeInsets.only(right: 20),
+        padding: EdgeInsets.only(left: 10),
         child: ListView.builder(
           itemCount: 10,
           scrollDirection: Axis.horizontal,

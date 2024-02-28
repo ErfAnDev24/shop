@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class HomePageView extends StatefulWidget {
-  const HomePageView({super.key});
+class BannerWidget extends StatefulWidget {
+  const BannerWidget({super.key});
 
   @override
-  State<HomePageView> createState() => _HomePageViewState();
+  State<BannerWidget> createState() => _BannerWidgetState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _BannerWidgetState extends State<BannerWidget> {
   @override
   Widget build(BuildContext context) {
-    PageController pageController = PageController(viewportFraction: 0.8);
+    PageController pageController =
+        PageController(viewportFraction: 0.8, initialPage: 1);
 
     return SizedBox(
       height: 170,
