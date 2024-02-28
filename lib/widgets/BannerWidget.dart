@@ -24,7 +24,7 @@ class _BannerWidgetState extends State<BannerWidget> {
             itemCount: 3,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Container(
                   width: 100,
                   height: 100,
@@ -41,7 +41,7 @@ class _BannerWidgetState extends State<BannerWidget> {
             child: SmoothPageIndicator(
               controller: pageController,
               count: 3,
-              effect: ExpandingDotsEffect(
+              effect: const ExpandingDotsEffect(
                   dotHeight: 7,
                   dotWidth: 7,
                   expansionFactor: 4,

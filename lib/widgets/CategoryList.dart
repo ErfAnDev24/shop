@@ -13,13 +13,13 @@ class _CategoryListState extends State<CategoryList> {
     return SizedBox(
       height: 90,
       child: Padding(
-        padding: EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 10),
         child: ListView.builder(
           itemCount: 10,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
                   Stack(
@@ -29,7 +29,7 @@ class _CategoryListState extends State<CategoryList> {
                         width: 55,
                         height: 55,
                         decoration: ShapeDecoration(
-                          shadows: [
+                          shadows: const [
                             BoxShadow(
                               blurRadius: 15,
                               color: Colors.red,
@@ -43,15 +43,15 @@ class _CategoryListState extends State<CategoryList> {
                           ),
                         ),
                       ),
-                      Image(
+                      const Image(
                         image: AssetImage('images/sampleIcon.png'),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
-                  Text(
+                  const Text(
                     'data',
                     style: TextStyle(fontSize: 13),
                   ),

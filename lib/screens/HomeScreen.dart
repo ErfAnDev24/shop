@@ -16,24 +16,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 206, 206, 206),
+      backgroundColor: const Color(0xffEEEEEE),
       body: Padding(
-        padding: EdgeInsets.only(top: 60),
+        padding: const EdgeInsets.only(top: 60),
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Search(),
               ),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 25),
                 child: BannerWidget(),
               ),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(left: 25, bottom: 15),
                 child: Text(
@@ -44,10 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: CategoryList(),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Row(
                 children: [
                   Padding(
@@ -64,14 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20),
                 child: SizedBox(
                   height: 220,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     itemBuilder: (context, index) {
-                      return Padding(
+                      return const Padding(
                         padding: EdgeInsets.only(right: 15, bottom: 20),
                         child: SellItem(),
                       );
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Row(
                 children: [
                   Padding(
@@ -97,14 +97,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20),
                 child: SizedBox(
                   height: 220,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     itemBuilder: (context, index) {
-                      return Padding(
+                      return const Padding(
                         padding: EdgeInsets.only(right: 15, bottom: 20),
                         child: SellItem(),
                       );

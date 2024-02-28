@@ -15,13 +15,11 @@ class _SearchState extends State<Search> {
       height: 45,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(15)),
-      child: Padding(
+      child: const Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Container(
-            child: Image(
-              image: AssetImage('images/appleLogo.png'),
-            ),
+          Image(
+            image: AssetImage('images/appleLogo.png'),
           ),
           Spacer(),
           Padding(
@@ -31,10 +29,8 @@ class _SearchState extends State<Search> {
               style: TextStyle(color: Colors.grey),
             ),
           ),
-          Container(
-            child: Image(
-              image: AssetImage('images/searchLogo.png'),
-            ),
+          Image(
+            image: AssetImage('images/searchLogo.png'),
           ),
         ]),
       ),
