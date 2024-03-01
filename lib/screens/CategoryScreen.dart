@@ -14,7 +14,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEEEEEE),
-      appBar: AppBar(backgroundColor: Colors.blue),
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: const Color(0xffEEEEEE),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(

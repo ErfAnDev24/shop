@@ -14,7 +14,10 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEEEEEE),
-      appBar: AppBar(backgroundColor: Colors.blue),
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: const Color(0xffEEEEEE),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
