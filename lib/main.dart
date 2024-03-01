@@ -5,6 +5,7 @@ import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/screens/AccountScreen.dart';
 import 'package:digikala/screens/CategoryScreen.dart';
 import 'package:digikala/screens/HomeScreen.dart';
+import 'package:digikala/screens/ProductDetailsScreen.dart';
 import 'package:digikala/screens/ProductScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -34,10 +35,11 @@ class _ApplicationState extends State<Application> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: const Color(0xffEEEEEE),
-        body: IndexedStack(
+        body: /*IndexedStack(
           index: selectedIndex,
           children: screens(),
-        ),
+        )*/
+            const ProductDetailsScreen(),
         bottomNavigationBar: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
