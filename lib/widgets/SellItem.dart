@@ -26,7 +26,7 @@ class _SellItemState extends State<SellItem> {
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              Container(
+              const SizedBox(
                 width: double.infinity,
                 height: 105,
               ),
@@ -35,7 +35,7 @@ class _SellItemState extends State<SellItem> {
                 child: Container(
                   width: 75,
                   height: 98,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('images/sampleItemForSelling.png'),
                     ),
@@ -51,7 +51,7 @@ class _SellItemState extends State<SellItem> {
                     color: CustomeColors.red,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       '%4',
                       style: TextStyle(fontSize: 10, color: Colors.white),
@@ -65,7 +65,7 @@ class _SellItemState extends State<SellItem> {
                 child: Container(
                   width: 18,
                   height: 20,
-                  child: Center(
+                  child: const Center(
                     child: Image(
                       image: AssetImage('images/like.png'),
                     ),
@@ -74,9 +74,9 @@ class _SellItemState extends State<SellItem> {
               ),
             ],
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 15, left: 10),
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               height: 30,
               child: Text(
@@ -87,7 +87,7 @@ class _SellItemState extends State<SellItem> {
           ),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(10),
                   bottomLeft: Radius.circular(10),
@@ -98,14 +98,14 @@ class _SellItemState extends State<SellItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 25),
                     child: Text(
                       '\$',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
-                  Column(
+                  const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -125,10 +125,10 @@ class _SellItemState extends State<SellItem> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.only(right: 10),
                     child: Transform.scale(
                       scale: 1.2,
-                      child: Image(
+                      child: const Image(
                         image: AssetImage('images/arrowRight.png'),
                       ),
                     ),

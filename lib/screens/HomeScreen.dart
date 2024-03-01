@@ -35,12 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(left: 25, bottom: 15),
-                child: Text(
-                  'Category',
-                  style: TextStyle(
-                    color: CustomeColors.grey,
-                  ),
+                padding: EdgeInsets.only(left: 25, bottom: 20, right: 25),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Category',
+                      style: TextStyle(
+                          color: CustomeColors.grey,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -48,23 +53,37 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CategoryList(),
             ),
             const SliverToBoxAdapter(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 25, bottom: 15, top: 15),
-                    child: Text(
-                      'Most popular',
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Most Popular',
                       style: TextStyle(
-                        color: CustomeColors.grey,
+                          color: CustomeColors.grey,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Spacer(),
+                    Text(
+                      'show all',
+                      style: TextStyle(
+                          color: CustomeColors.blue,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Image(
+                        image: AssetImage('images/goIn.png'),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20, top: 15, bottom: 20),
                 child: SizedBox(
                   height: 220,
                   child: ListView.builder(
@@ -81,18 +100,32 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SliverToBoxAdapter(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 25, bottom: 15, top: 15),
-                    child: Text(
-                      'Most viewd',
+              child: Padding(
+                padding: EdgeInsets.only(left: 25, bottom: 20, right: 25),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Category',
                       style: TextStyle(
-                        color: Colors.grey,
+                          color: CustomeColors.grey,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Spacer(),
+                    Text(
+                      'show all',
+                      style: TextStyle(
+                          color: CustomeColors.blue,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Image(
+                        image: AssetImage('images/goIn.png'),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SliverToBoxAdapter(

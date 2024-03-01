@@ -1,3 +1,4 @@
+import 'package:digikala/constants/CustomColors.dart';
 import 'package:flutter/material.dart';
 
 class Search extends StatefulWidget {
@@ -26,7 +27,8 @@ class _SearchState extends State<Search> {
             padding: EdgeInsets.only(right: 10),
             child: Text(
               'Search for products',
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                  color: CustomeColors.grey, fontWeight: FontWeight.bold),
             ),
           ),
           Image(
