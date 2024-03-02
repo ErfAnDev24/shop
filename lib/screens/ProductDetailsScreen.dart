@@ -163,6 +163,49 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ],
             ),
           ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                child: Text(
+                  'Select color',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                width: 30,
+                height: 30,
+                margin: const EdgeInsets.only(left: 25),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.red,
+                ),
+              ),
+              Container(
+                width: 30,
+                height: 30,
+                margin: const EdgeInsets.only(left: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.red,
+                ),
+              ),
+              Container(
+                width: 30,
+                height: 30,
+                margin: const EdgeInsets.only(left: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
