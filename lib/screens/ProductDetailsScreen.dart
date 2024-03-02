@@ -63,14 +63,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           Container(
             width: 320,
-            height: 315,
+            height: 290,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
               children: [
-                Row(
+                const Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
@@ -106,9 +106,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: CustomeColors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Image(
+                          image: AssetImage('images/sampleItemOne.png'),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
                         width: 70,
                         height: 70,
                         decoration: BoxDecoration(
@@ -116,31 +136,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               Border.all(width: 1, color: CustomeColors.grey),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 60,
-                              height: 60,
-                              child: Image(
-                                image: AssetImage('images/'),
-                              ),
-                            ),
-                            Container(
-                              width: 60,
-                              height: 60,
-                              child: Image(
-                                image: AssetImage('images/'),
-                              ),
-                            ),
-                            Container(
-                              width: 60,
-                              height: 60,
-                              child: Image(
-                                image: AssetImage('images/'),
-                              ),
-                            ),
-                          ],
-                        )),
+                        child: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Image(
+                            image: AssetImage('images/sampleItemTwo.png'),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: CustomeColors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Image(
+                          image: AssetImage('images/iphone_se.png'),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
