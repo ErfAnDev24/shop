@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:flutter/material.dart';
 
@@ -52,18 +54,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ]),
           ),
           const SizedBox(
-            height: 20,
+            height: 15,
           ),
           const Text(
             'IPhone SE 2022',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
-            height: 20,
+            height: 15,
           ),
           Container(
             width: 320,
-            height: 290,
+            height: 230,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
@@ -91,7 +93,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       padding: EdgeInsets.only(top: 20, right: 10),
                       child: SizedBox(
                         width: 100,
-                        height: 145,
+                        height: 100,
                         child: Image(
                           image: AssetImage('images/iphone_se.png'),
                         ),
@@ -107,7 +109,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -167,7 +169,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                padding: EdgeInsets.symmetric(horizontal: 42, vertical: 10),
                 child: Text(
                   'Select color',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -179,8 +181,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             children: [
               Container(
                 width: 30,
-                height: 30,
-                margin: const EdgeInsets.only(left: 25),
+                height: 25,
+                margin: const EdgeInsets.only(left: 42),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.red,
@@ -188,7 +190,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
               Container(
                 width: 30,
-                height: 30,
+                height: 25,
                 margin: const EdgeInsets.only(left: 15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -197,12 +199,268 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
               Container(
                 width: 30,
-                height: 30,
+                height: 25,
                 margin: const EdgeInsets.only(left: 15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.red,
                 ),
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 42, vertical: 10),
+            child: SizedBox(
+              width: double.infinity,
+              child: Text(
+                'Select internal storage',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 42,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 75,
+                  height: 30,
+                  margin: const EdgeInsets.only(right: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 2, color: CustomeColors.grey),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      '128',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 75,
+                  height: 30,
+                  margin: const EdgeInsets.only(right: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 2, color: CustomeColors.grey),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      '256',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 75,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 2, color: CustomeColors.blue),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      '512',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            width: 320,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: const Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Technical features : ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'Show',
+                  style: TextStyle(
+                      color: CustomeColors.blue, fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Image(
+                    image: AssetImage('images/goIn.png'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            width: 320,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: const Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Technical features : ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'Show',
+                  style: TextStyle(
+                      color: CustomeColors.blue, fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Image(
+                    image: AssetImage('images/goIn.png'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            width: 320,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: const Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Technical features : ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  'Show',
+                  style: TextStyle(
+                      color: CustomeColors.blue, fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Image(
+                    image: AssetImage('images/goIn.png'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    width: 150,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: CustomeColors.green,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 170,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: CustomeColors.green,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                          child: Container(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                children: [
+                  Container(
+                    width: 150,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: CustomeColors.blue,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 170,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: CustomeColors.blue,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: const Center(
+                              child: Text(
+                                'Add to Cart',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           )
