@@ -2,9 +2,11 @@ import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/screens/AccountScreen.dart';
 import 'package:digikala/screens/CategoryScreen.dart';
 import 'package:digikala/screens/HomeScreen.dart';
+import 'package:digikala/screens/LoginScreen.dart';
 import 'package:digikala/screens/ProductDetailsScreen.dart';
 import 'package:digikala/screens/ProductScreen.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,7 @@ class _ApplicationState extends State<Application> {
   @override
   void initState() {
     selectedIndex = 0;
+    initLocators();
     super.initState();
   }
 
@@ -39,7 +42,7 @@ class _ApplicationState extends State<Application> {
           index: selectedIndex,
           children: screens(),
         )*/
-            const ProductDetailsScreen(),
+            const LoginScreen(),
         bottomNavigationBar: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
