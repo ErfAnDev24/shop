@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:ui';
 
+import 'package:digikala/bloc/loginScreenBloc/AuthBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/screens/AccountScreen.dart';
@@ -10,6 +11,7 @@ import 'package:digikala/screens/LoginScreen.dart';
 import 'package:digikala/screens/ProductDetailsScreen.dart';
 import 'package:digikala/screens/ProductScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(Application());
@@ -42,7 +44,10 @@ class _ApplicationState extends State<Application> {
           index: selectedIndex,
           children: screens(),
         )*/
-            const LoginScreen(),
+            BlocProvider(
+          create: (context) => AuthBloc(),
+          child: const LoginScreen(),
+        ),
         bottomNavigationBar: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),

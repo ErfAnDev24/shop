@@ -29,10 +29,10 @@ class AuthenticationRepositoryImpl implements IAuthenticationRepository {
   Future<Either<String, String>> login(String identity, String password) async {
     try {
       await datasource.login(identity, password);
-      print(
-        locator.get<SharedPreferences>().getString('access-token'),
-      );
-      return const Right('logging in user has been done successfully!');
+      String? token =
+          locator.get<SharedPreferences>().getString('access-token');
+
+      return Right(token!);
     } on ApiException catch (ex) {
       return Left(ex.message);
     }
