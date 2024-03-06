@@ -7,11 +7,11 @@ class Category {
 
   String id;
 
-  String thumbnail;
+  String image;
 
   String title;
 
-  Category(this.collectionId, this.color, this.icon, this.id, this.thumbnail,
+  Category(this.collectionId, this.color, this.icon, this.id, this.image,
       this.title);
 
   factory Category.buildObjectFromJson(Map<String, dynamic> jsonObject) {
@@ -20,7 +20,7 @@ class Category {
         jsonObject['color'],
         jsonObject['icon'],
         jsonObject['id'],
-        jsonObject['thumbnail'],
+        'http://startflutter.ir/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['thumbnail']}',
         jsonObject['title']);
   }
 }

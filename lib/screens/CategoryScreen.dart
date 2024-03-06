@@ -3,6 +3,7 @@ import 'package:digikala/bloc/categoryScreenBloc/CategoryBloc.dart';
 import 'package:digikala/bloc/categoryScreenBloc/CategoryEvent.dart';
 import 'package:digikala/bloc/categoryScreenBloc/CategoryState.dart';
 import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/screens/CategoryItem.dart';
 import 'package:digikala/widgets/Search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,10 +101,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                'http://startflutter.ir/api/files/${right[index].collectionId}/${right[index].id}/${right[index].thumbnail}',
-                          ),
+                          child: CategoryItem(category: right[index]),
                         );
                       },
                     ),
