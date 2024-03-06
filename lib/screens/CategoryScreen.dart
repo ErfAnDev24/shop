@@ -17,6 +17,12 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
+  void initState() {
+    BlocProvider.of<CategoryBloc>(context).add(LoadingCategoryEvent());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEEEEEE),
@@ -55,28 +61,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<CategoryBloc>(context).add(
-                  LoadingCategoryEvent(),
-                );
-              },
-              child: const Text('load data'),
-            ),
-          ),
           BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
-              if (state is InitCategortyState) {
-                return SliverToBoxAdapter(
-                  child: Text('please click'),
-                );
-              }
-
               if (state is LoadingCategoryState) {
                 return SliverToBoxAdapter(
-                  child: CircularProgressIndicator(),
-                );
+                    child: SizedBox(
+                        height: 400,
+                        width: 400,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        )));
               }
 
               if (state is ResponseCategoryState) {
@@ -108,7 +102,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                 );
               } else {
-                return Text('error');
+                return SliverToBoxAdapter(
+                  child: Text('error'),
+                );
               }
             },
           ),
