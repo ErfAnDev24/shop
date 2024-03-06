@@ -1,5 +1,7 @@
 import 'package:digikala/datasource/AuthenticationRemote.dart';
+import 'package:digikala/datasource/CategoryDatasource.dart';
 import 'package:digikala/repository/AuthenticationRepository.dart';
+import 'package:digikala/repository/CategoryRepository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +14,9 @@ void initLocators() async {
       BaseOptions(baseUrl: 'https://startflutter.ir/api/'),
     ),
   );
+  locator.registerFactory<ICategoryDatasource>(() => CategoryDatasourceImpl());
 
+  locator.registerFactory<ICategoryRepository>(() => CategoryRepositoryImpl());
   locator
       .registerFactory<IAuthenticationRemote>(() => AuthenticationRemoteImpl());
 

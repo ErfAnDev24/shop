@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:ui';
 
+import 'package:digikala/bloc/categoryScreenBloc/CategoryBloc.dart';
 import 'package:digikala/bloc/loginScreenBloc/AuthBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/di/ServiceLocator.dart';
@@ -40,14 +41,14 @@ class _ApplicationState extends State<Application> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: const Color(0xffEEEEEE),
-        body: /*IndexedStack(
+        body: IndexedStack(
           index: selectedIndex,
           children: screens(),
-        )*/
-            BlocProvider(
+        ),
+        /* BlocProvider(
           create: (context) => AuthBloc(),
           child: const LoginScreen(),
-        ),
+        ),*/
         bottomNavigationBar: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
@@ -134,11 +135,14 @@ class _ApplicationState extends State<Application> {
   }
 
   List<Widget> screens() {
-    return const [
-      HomeScreen(),
-      CategoryScreen(),
-      ProductScreen(),
-      AccountScreen(),
+    return [
+      const HomeScreen(),
+      BlocProvider(
+        create: (context) => CategoryBloc(),
+        child: const CategoryScreen(),
+      ),
+      const ProductScreen(),
+      const AccountScreen(),
     ];
   }
 }
