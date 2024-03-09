@@ -1,15 +1,11 @@
-import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:digikala/bloc/categoryScreenBloc/CategoryBloc.dart';
-import 'package:digikala/bloc/loginScreenBloc/AuthBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/screens/AccountScreen.dart';
 import 'package:digikala/screens/CategoryScreen.dart';
 import 'package:digikala/screens/HomeScreen.dart';
-import 'package:digikala/screens/LoginScreen.dart';
-import 'package:digikala/screens/ProductDetailsScreen.dart';
 import 'package:digikala/screens/ProductScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

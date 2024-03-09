@@ -1,10 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digikala/bloc/categoryScreenBloc/CategoryBloc.dart';
 import 'package:digikala/bloc/categoryScreenBloc/CategoryEvent.dart';
 import 'package:digikala/bloc/categoryScreenBloc/CategoryState.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/screens/CategoryItem.dart';
-import 'package:digikala/widgets/Search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,13 +62,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
           BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
               if (state is LoadingCategoryState) {
-                return SliverToBoxAdapter(
-                    child: SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        )));
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
+                );
               }
 
               if (state is ResponseCategoryState) {

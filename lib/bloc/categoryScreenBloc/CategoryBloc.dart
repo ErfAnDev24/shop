@@ -7,10 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final repository = locator.get<ICategoryRepository>();
 
-  CategoryBloc() : super(InitCategortyState()) {
+  CategoryBloc() : super(LoadingCategoryState()) {
     on<LoadingCategoryEvent>(
       (event, emit) async {
-        emit(LoadingCategoryState());
         var response = await repository.getCategoryList();
         emit(
           ResponseCategoryState(response),
