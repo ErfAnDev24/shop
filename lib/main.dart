@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:digikala/bloc/categoryScreenBloc/CategoryBloc.dart';
+import 'package:digikala/bloc/homeBloc/HomeBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/screens/AccountScreen.dart';
@@ -132,7 +133,10 @@ class _ApplicationState extends State<Application> {
 
   List<Widget> screens() {
     return [
-      const HomeScreen(),
+      BlocProvider(
+        create: (context) => HomeBloc(),
+        child: const HomeScreen(),
+      ),
       BlocProvider(
         create: (context) => CategoryBloc(),
         child: const CategoryScreen(),

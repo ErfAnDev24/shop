@@ -5,14 +5,14 @@ import 'package:digikala/util/ApiException.dart';
 import 'package:either_dart/either.dart';
 
 abstract class IBannerRepository {
-  Future<Either<String, List<Banner>>> getBanners();
+  Future<Either<String, List<HomeBanner>>> getBanners();
 }
 
 class BannerRepositoryImpl implements IBannerRepository {
   final datasource = locator.get<IBannerDatasource>();
 
   @override
-  Future<Either<String, List<Banner>>> getBanners() async {
+  Future<Either<String, List<HomeBanner>>> getBanners() async {
     try {
       var bannerList = await datasource.getBanners();
       return Right(bannerList);

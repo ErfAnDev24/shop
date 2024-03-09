@@ -1,14 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/models/Banner.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class BannerWidget extends StatefulWidget {
-  const BannerWidget({super.key});
+class BannerWidget extends StatelessWidget {
+  List<HomeBanner> bannerList;
 
-  @override
-  State<BannerWidget> createState() => _BannerWidgetState();
-}
+  BannerWidget({super.key, required this.bannerList});
 
-class _BannerWidgetState extends State<BannerWidget> {
   @override
   Widget build(BuildContext context) {
     PageController pageController =
@@ -21,7 +21,7 @@ class _BannerWidgetState extends State<BannerWidget> {
         children: [
           PageView.builder(
             controller: pageController,
-            itemCount: 3,
+            itemCount: bannerList.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -29,8 +29,32 @@ class _BannerWidgetState extends State<BannerWidget> {
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: CachedNetworkImage(
+                      errorListener: (value) {
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: const Color.fromARGB(93, 246, 154, 147),
+                          ),
+                        );
+                      },
+                      imageUrl: bannerList[index].imageURL,
+                      placeholder: (context, url) {
+                        return Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: CustomeColors.grey),
+                        );
+                      },
+                    ),
                   ),
                 ),
               );
@@ -40,7 +64,7 @@ class _BannerWidgetState extends State<BannerWidget> {
             bottom: 10,
             child: SmoothPageIndicator(
               controller: pageController,
-              count: 3,
+              count: 4,
               effect: const ExpandingDotsEffect(
                   dotHeight: 7,
                   dotWidth: 7,

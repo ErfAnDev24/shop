@@ -25,10 +25,10 @@ void initLocators() async {
   locator.registerFactory<IAuthenticationRepository>(
       () => AuthenticationRepositoryImpl());
 
-  locator.registerSingleton<SharedPreferences>(
-      await SharedPreferences.getInstance());
-
   locator.registerFactory<IBannerDatasource>(() => BannerDatasourceImpl());
 
   locator.registerFactory<IBannerRepository>(() => BannerRepositoryImpl());
+
+  locator.registerSingleton<SharedPreferences>(
+      await SharedPreferences.getInstance());
 }

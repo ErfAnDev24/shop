@@ -4,21 +4,22 @@ import 'package:digikala/util/ApiException.dart';
 import 'package:dio/dio.dart';
 
 abstract class IBannerDatasource {
-  Future<List<Banner>> getBanners();
+  Future<List<HomeBanner>> getBanners();
 }
 
 class BannerDatasourceImpl implements IBannerDatasource {
   final dio = locator.get<Dio>();
 
   @override
-  Future<List<Banner>> getBanners() async {
+  Future<List<HomeBanner>> getBanners() async {
     try {
       var response = await dio.get('collections/banner/records');
 
       var jsonObjectList = response.data['items'];
 
-      List<Banner> bannerList = jsonObjectList
-          .map<Banner>((jsonObject) => Banner.buildFromJsonObject(jsonObject))
+      List<HomeBanner> bannerList = jsonObjectList
+          .map<HomeBanner>(
+              (jsonObject) => HomeBanner.buildFromJsonObject(jsonObject))
           .toList();
 
       return bannerList;
