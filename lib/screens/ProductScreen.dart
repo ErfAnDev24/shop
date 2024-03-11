@@ -61,7 +61,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20),
               itemBuilder: (context, index) {
-                return const SellItem();
+                return Text('er');
               },
               itemCount: 8,
             ),

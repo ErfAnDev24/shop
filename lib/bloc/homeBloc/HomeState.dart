@@ -1,17 +1,17 @@
 import 'package:digikala/models/Banner.dart';
 import 'package:digikala/models/Category.dart';
+import 'package:digikala/models/Product.dart';
 import 'package:either_dart/either.dart';
 
 class HomeState {}
 
-class LoadingBannerState extends HomeState {}
+class InitState extends HomeState {}
 
-class ResponseBannerState extends HomeState {
-  Either<String, List<HomeBanner>> bannerList;
-  ResponseBannerState(this.bannerList);
-}
+class LoadingHomeState extends HomeState {}
 
-class ResponseHomeCategoryListState extends HomeState {
+class HomeResponseState extends HomeState {
   Either<String, List<Category>> categoryList;
-  ResponseHomeCategoryListState(this.categoryList);
+  Either<String, List<HomeBanner>> bannerList;
+  Either<String, List<Product>> productList;
+  HomeResponseState(this.categoryList, this.bannerList, this.productList);
 }

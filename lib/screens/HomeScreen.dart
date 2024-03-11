@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     BlocProvider.of<HomeBloc>(context).add(HomeRequestEvent());
+    BlocProvider.of<HomeBloc>(context).add(HomeRequestEvent());
     super.initState();
   }
 
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              if (state is LoadingBannerState) {
+              if (state is LoadingHomeState) {
                 return const SliverToBoxAdapter(
                   child: Center(
                     child: Padding(
@@ -57,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 );
-              } else if (state is ResponseBannerState) {
+              } else if (state is HomeResponseState) {
                 return state.bannerList.fold(
                   (left) => SliverToBoxAdapter(
                     child: Text(left),
@@ -95,8 +96,45 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: CategoryList(),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is LoadingHomeState) {
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Center(
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              if (state is HomeResponseState) {
+                return state.categoryList.fold(
+                  (left) => SliverToBoxAdapter(
+                    child: Text(left),
+                  ),
+                  (right) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        child: CategoryList(categoryList: right),
+                      ),
+                    );
+                  },
+                );
+              }
+
+              return SliverToBoxAdapter(
+                child: Text('Nothing'),
+              );
+            },
           ),
           const SliverToBoxAdapter(
             child: Padding(
@@ -125,23 +163,56 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, top: 15, bottom: 20),
-              child: SizedBox(
-                height: 220,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.only(right: 15, bottom: 20),
-                      child: SellItem(),
-                    );
-                  },
-                ),
-              ),
-            ),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is LoadingHomeState) {
+                const SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Center(
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              } else if (state is HomeResponseState) {
+                return state.productList.fold((left) {
+                  return SliverToBoxAdapter(
+                    child: Text(left),
+                  );
+                }, (right) {
+                  return SliverToBoxAdapter(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                      child: SizedBox(
+                        height: 220,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: (right.length - 1),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 15, bottom: 20),
+                              child: SellItem(product: right[index + 1]),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                });
+              }
+
+              return SliverToBoxAdapter(
+                child: Text('error'),
+              );
+            },
           ),
           const SliverToBoxAdapter(
             child: Padding(
@@ -170,23 +241,56 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: SizedBox(
-                height: 220,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.only(right: 15, bottom: 20),
-                      child: SellItem(),
-                    );
-                  },
-                ),
-              ),
-            ),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is LoadingHomeState) {
+                const SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Center(
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              } else if (state is HomeResponseState) {
+                return state.productList.fold((left) {
+                  return SliverToBoxAdapter(
+                    child: Text(left),
+                  );
+                }, (right) {
+                  return SliverToBoxAdapter(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                      child: SizedBox(
+                        height: 220,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: (right.length - 1),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 15, bottom: 20),
+                              child: SellItem(product: right[index + 1]),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                });
+              }
+
+              return SliverToBoxAdapter(
+                child: Text('error'),
+              );
+            },
           ),
         ],
       ),

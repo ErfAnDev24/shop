@@ -1,9 +1,11 @@
 import 'package:digikala/datasource/AuthenticationRemote.dart';
 import 'package:digikala/datasource/BannerDatasource.dart';
 import 'package:digikala/datasource/CategoryDatasource.dart';
+import 'package:digikala/datasource/ProductDatasource.dart';
 import 'package:digikala/repository/AuthenticationRepository.dart';
 import 'package:digikala/repository/BannerRepository.dart';
 import 'package:digikala/repository/CategoryRepository.dart';
+import 'package:digikala/repository/ProductRepository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +30,10 @@ void initLocators() async {
   locator.registerFactory<IBannerDatasource>(() => BannerDatasourceImpl());
 
   locator.registerFactory<IBannerRepository>(() => BannerRepositoryImpl());
+
+  locator.registerFactory<IProductDatasource>(() => ProductDatasourceImpl());
+
+  locator.registerFactory<IProductRepository>(() => ProductRepositoryImpl());
 
   locator.registerSingleton<SharedPreferences>(
       await SharedPreferences.getInstance());

@@ -1,21 +1,22 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:digikala/models/Category.dart';
 import 'package:flutter/material.dart';
 
-class CategoryList extends StatefulWidget {
-  const CategoryList({super.key});
+class CategoryList extends StatelessWidget {
+  List<Category> categoryList;
 
-  @override
-  State<CategoryList> createState() => _CategoryListState();
-}
+  CategoryList({super.key, required this.categoryList});
 
-class _CategoryListState extends State<CategoryList> {
   @override
   Widget build(BuildContext context) {
+    final String colorPerfix = '0xff';
+
     return SizedBox(
       height: 90,
       child: Padding(
         padding: const EdgeInsets.only(left: 10),
         child: ListView.builder(
-          itemCount: 10,
+          itemCount: categoryList.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return Padding(
@@ -29,30 +30,37 @@ class _CategoryListState extends State<CategoryList> {
                         width: 55,
                         height: 55,
                         decoration: ShapeDecoration(
-                          shadows: const [
+                          shadows: [
                             BoxShadow(
                               blurRadius: 15,
-                              color: Colors.red,
+                              color: Color(
+                                int.parse('0xff${categoryList[index].color}'),
+                              ),
                               spreadRadius: -4,
-                              offset: Offset(0, 8),
+                              offset: const Offset(0, 8),
                             ),
                           ],
-                          color: Colors.red,
+                          color: Color(
+                            int.parse('0xff${categoryList[index].color}'),
+                          ),
                           shape: ContinuousRectangleBorder(
                             borderRadius: BorderRadius.circular(40),
                           ),
                         ),
                       ),
-                      const Image(
-                        image: AssetImage('images/sampleIcon.png'),
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: CachedNetworkImage(
+                            imageUrl: categoryList[index].icon),
                       ),
                     ],
                   ),
                   const SizedBox(
                     height: 8,
                   ),
-                  const Text(
-                    'data',
+                  Text(
+                    '${categoryList[index].title}',
                     style: TextStyle(fontSize: 13),
                   ),
                 ],

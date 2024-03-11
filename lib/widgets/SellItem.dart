@@ -1,21 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/models/Product.dart';
 import 'package:flutter/material.dart';
 
-class SellItem extends StatefulWidget {
-  const SellItem({super.key});
+class SellItem extends StatelessWidget {
+  Product product;
 
-  @override
-  State<SellItem> createState() => _SellItemState();
-}
+  SellItem({super.key, required this.product});
 
-class _SellItemState extends State<SellItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 210,
       width: 150,
       decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
+        const BoxShadow(
             color: CustomeColors.blue,
             blurRadius: 12,
             spreadRadius: -12,
@@ -35,11 +34,7 @@ class _SellItemState extends State<SellItem> {
                 child: Container(
                   width: 75,
                   height: 98,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('images/sampleItemForSelling.png'),
-                    ),
-                  ),
+                  child: CachedNetworkImage(imageUrl: product.imageURL),
                 ),
               ),
               Positioned(
@@ -59,13 +54,13 @@ class _SellItemState extends State<SellItem> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 7,
                 right: 8,
-                child: Container(
+                child: SizedBox(
                   width: 18,
                   height: 20,
-                  child: const Center(
+                  child: Center(
                     child: Image(
                       image: AssetImage('images/like.png'),
                     ),
@@ -74,14 +69,15 @@ class _SellItemState extends State<SellItem> {
               ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 15, left: 10),
+          Padding(
+            padding: const EdgeInsets.only(top: 15, left: 10),
             child: SizedBox(
               width: double.infinity,
               height: 30,
               child: Text(
-                'Iphone 13 pro max',
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                product.name,
+                style:
+                    const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -105,19 +101,19 @@ class _SellItemState extends State<SellItem> {
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
-                  const Column(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '710.00',
-                        style: TextStyle(
+                        '${product.discount_price}',
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '699.99',
-                        style: TextStyle(
+                        '${product.price}',
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
