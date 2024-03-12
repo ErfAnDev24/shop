@@ -3,13 +3,19 @@ import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/models/Product.dart';
 import 'package:flutter/material.dart';
 
-class SellItem extends StatelessWidget {
+class ProductItem extends StatelessWidget {
   Product product;
 
-  SellItem({super.key, required this.product});
+  ProductItem({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    String price = (product.price - product.discount_price).toString();
+    String off = (100 -
+            (((product.price - product.discount_price) / product.price) * 100)
+                .round())
+        .toString();
+
     return Container(
       height: 210,
       width: 150,
@@ -31,7 +37,7 @@ class SellItem extends StatelessWidget {
               ),
               Positioned(
                 top: 10,
-                child: Container(
+                child: SizedBox(
                   width: 75,
                   height: 98,
                   child: CachedNetworkImage(imageUrl: product.imageURL),
@@ -40,16 +46,19 @@ class SellItem extends StatelessWidget {
               Positioned(
                 left: 7,
                 child: Container(
-                  width: 25,
-                  height: 15,
+                  width: 30,
+                  height: 20,
                   decoration: BoxDecoration(
                     color: CustomeColors.red,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      '%4',
-                      style: TextStyle(fontSize: 10, color: Colors.white),
+                      '%${off}',
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontFamily: 'digits'),
                     ),
                   ),
                 ),
@@ -70,14 +79,17 @@ class SellItem extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 15, left: 10),
+            padding: const EdgeInsets.only(top: 15, right: 10),
             child: SizedBox(
               width: double.infinity,
               height: 30,
               child: Text(
                 product.name,
-                style:
-                    const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+                style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'vazir'),
               ),
             ),
           ),
@@ -94,32 +106,6 @@ class SellItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 25),
-                    child: Text(
-                      '\$',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${product.discount_price}',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '${product.price}',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: Transform.scale(
@@ -127,6 +113,36 @@ class SellItem extends StatelessWidget {
                       child: const Image(
                         image: AssetImage('images/arrowRight.png'),
                       ),
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${product.price}',
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            decoration: TextDecoration.lineThrough,
+                            fontFamily: 'digits'),
+                      ),
+                      Text(
+                        '${price}',
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontFamily: 'digits'),
+                      ),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Text(
+                      'تومان',
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                          fontFamily: 'vazir'),
                     ),
                   ),
                 ],

@@ -1,5 +1,5 @@
 import 'package:digikala/constants/CustomColors.dart';
-import 'package:digikala/widgets/SellItem.dart';
+import 'package:digikala/widgets/ProductItem.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
