@@ -17,11 +17,11 @@ class ProductList extends StatelessWidget {
             textDirection: TextDirection.rtl,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: (productList.length - 1),
+              itemCount: (productList.length),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 15, bottom: 20),
-                  child: ProductItem(product: productList[index + 1]),
+                  child: ProductItem(product: productList[index]),
                 );
               },
             ),

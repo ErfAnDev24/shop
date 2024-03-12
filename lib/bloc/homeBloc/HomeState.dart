@@ -13,5 +13,8 @@ class HomeResponseState extends HomeState {
   Either<String, List<Category>> categoryList;
   Either<String, List<HomeBanner>> bannerList;
   Either<String, List<Product>> productList;
-  HomeResponseState(this.categoryList, this.bannerList, this.productList);
+  Either<String, List<Product>> mostViewedList;
+  Either<String, List<Product>> bestSellerList;
+  HomeResponseState(this.categoryList, this.bannerList, this.productList,
+      this.bestSellerList, this.mostViewedList);
 }

@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state is LoadingHomeState) {
                 return const LoadingWidget();
               } else if (state is HomeResponseState) {
-                return state.productList.fold(
+                return state.bestSellerList.fold(
                   (left) => const ShowingError(),
                   (right) => ProductList(productList: right),
                 );
@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state is LoadingHomeState) {
                 return const LoadingWidget();
               } else if (state is HomeResponseState) {
-                return state.productList.fold(
+                return state.mostViewedList.fold(
                   (left) => const ShowingError(),
                   (right) => ProductList(productList: right),
                 );
