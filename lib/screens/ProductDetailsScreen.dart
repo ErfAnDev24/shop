@@ -25,7 +25,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             width: double.infinity,
           ),
           Container(
-            width: 320,
+            width: 350,
             height: 45,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -41,9 +41,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                   Text(
-                    'IPhone',
+                    'آیفون',
                     style: TextStyle(
-                        color: CustomeColors.grey, fontWeight: FontWeight.bold),
+                        fontFamily: 'vazir',
+                        color: CustomeColors.blue,
+                        fontWeight: FontWeight.bold),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
@@ -57,15 +59,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             height: 15,
           ),
           const Text(
-            'IPhone SE 2022',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            '2022 SE آیفون',
+            style: TextStyle(
+                fontFamily: 'vazir', fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 15,
           ),
           Container(
-            width: 320,
-            height: 230,
+            width: 350,
+            height: 240,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
@@ -76,7 +79,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 10, left: 10),
+                      padding: EdgeInsets.only(top: 10, left: 15),
                       child: Image(
                         image: AssetImage('images/start.png'),
                       ),
@@ -92,8 +95,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 20, right: 10),
                       child: SizedBox(
-                        width: 100,
-                        height: 100,
+                        width: 110,
+                        height: 110,
                         child: Image(
                           image: AssetImage('images/iphone_se.png'),
                         ),
@@ -101,7 +104,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     Spacer(),
                     Padding(
-                      padding: EdgeInsets.only(top: 10, right: 10),
+                      padding: EdgeInsets.only(top: 10, right: 20),
                       child: Image(
                         image: AssetImage('images/like.png'),
                       ),
@@ -111,273 +114,253 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: CustomeColors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Image(
-                          image: AssetImage('images/sampleItemOne.png'),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Container(
-                        width: 70,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          border:
-                              Border.all(width: 1, color: CustomeColors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Image(
-                            image: AssetImage('images/sampleItemTwo.png'),
+                SizedBox(
+                  height: 70,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 2,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Container(
+                            width: 70,
+                            height: 70,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1, color: CustomeColors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Image(
+                                image: AssetImage('images/sampleItemOne.png'),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
-                    Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: CustomeColors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Image(
-                          image: AssetImage('images/iphone_se.png'),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
           ),
           const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 42, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 15),
                 child: Text(
-                  'Select color',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  'انتخاب رنگ',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontFamily: 'vazir'),
                 ),
               ),
             ],
           ),
-          Row(
-            children: [
-              Container(
-                width: 30,
-                height: 25,
-                margin: const EdgeInsets.only(left: 42),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.red,
+          SizedBox(
+            height: 30,
+            width: double.infinity,
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 22),
+                child: ListView.builder(
+                  itemCount: 3,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 30,
+                      height: 25,
+                      margin: const EdgeInsets.only(right: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.red,
+                      ),
+                    );
+                  },
                 ),
-              ),
-              Container(
-                width: 30,
-                height: 25,
-                margin: const EdgeInsets.only(left: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.red,
-                ),
-              ),
-              Container(
-                width: 30,
-                height: 25,
-                margin: const EdgeInsets.only(left: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.red,
-                ),
-              ),
-            ],
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 42, vertical: 10),
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                'Select internal storage',
-                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 42,
+          const Directionality(
+            textDirection: TextDirection.rtl,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 15),
+              child: SizedBox(
+                width: double.infinity,
+                child: Text(
+                  'انتخاب حافظه داخلی',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontFamily: 'vazir'),
+                ),
+              ),
             ),
-            child: Row(
-              children: [
-                Container(
-                  width: 75,
-                  height: 30,
-                  margin: const EdgeInsets.only(right: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 2, color: CustomeColors.grey),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '128',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
+          ),
+          Directionality(
+            textDirection: TextDirection.rtl,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 32,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: 30,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 75,
+                      height: 30,
+                      margin: const EdgeInsets.only(left: 15),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: CustomeColors.grey),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          '128',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'digits'),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                Container(
-                  width: 75,
-                  height: 30,
-                  margin: const EdgeInsets.only(right: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 2, color: CustomeColors.grey),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '256',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 75,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 2, color: CustomeColors.blue),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '512',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           const SizedBox(
             height: 15,
           ),
           Container(
-            width: 320,
-            height: 40,
+            width: 350,
+            height: 45,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
+              border: Border.all(width: 2, color: CustomeColors.grey),
             ),
-            child: const Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'Technical features : ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+            child: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Text(
+                      'مشخصات فنی : ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontFamily: 'vazir'),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Text(
-                  'Show',
-                  style: TextStyle(
-                      color: CustomeColors.blue, fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Image(
-                    image: AssetImage('images/goIn.png'),
+                  Spacer(),
+                  Text(
+                    'مشاهده',
+                    style: TextStyle(
+                        color: CustomeColors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'vazir'),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    child: Image(
+                      image: AssetImage('images/goIn.png'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(
             height: 15,
           ),
           Container(
-            width: 320,
-            height: 40,
+            width: 350,
+            height: 45,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
+              border: Border.all(width: 2, color: CustomeColors.grey),
             ),
-            child: const Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'Technical features : ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+            child: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Text(
+                      'توضیحات محصول : ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontFamily: 'vazir'),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Text(
-                  'Show',
-                  style: TextStyle(
-                      color: CustomeColors.blue, fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Image(
-                    image: AssetImage('images/goIn.png'),
+                  Spacer(),
+                  Text(
+                    'مشاهده',
+                    style: TextStyle(
+                        color: CustomeColors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'vazir'),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    child: Image(
+                      image: AssetImage('images/goIn.png'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(
             height: 15,
           ),
           Container(
-            width: 320,
-            height: 40,
+            width: 350,
+            height: 45,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
+              border: Border.all(width: 2, color: CustomeColors.grey),
             ),
-            child: const Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'Technical features : ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+            child: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Text(
+                      'نظرات کاربران : ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontFamily: 'vazir'),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Text(
-                  'Show',
-                  style: TextStyle(
-                      color: CustomeColors.blue, fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Image(
-                    image: AssetImage('images/goIn.png'),
+                  Spacer(),
+                  Text(
+                    'مشاهده',
+                    style: TextStyle(
+                        color: CustomeColors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'vazir'),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    child: Image(
+                      image: AssetImage('images/goIn.png'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(
-            height: 15,
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -397,12 +380,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   Container(
                     width: 170,
-                    height: 60,
+                    height: 70,
                     decoration: BoxDecoration(
                       color: CustomeColors.green,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Expanded(
+                    child: Center(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: BackdropFilter(
@@ -413,17 +396,41 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text('\$'),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 8),
+                                  child: Text(
+                                    'تومان',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'vazir',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                                 const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('data'),
-                                    Text('data'),
+                                    Text(
+                                      '17800000',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'digits',
+                                        color: Colors.white,
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    ),
+                                    Text(
+                                      '17800000',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'digits',
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Container(
-                                  width: 25,
-                                  height: 15,
+                                  width: 30,
+                                  height: 20,
                                   decoration: BoxDecoration(
                                     color: CustomeColors.red,
                                     borderRadius: BorderRadius.circular(8),
@@ -432,7 +439,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     child: Text(
                                       '%4',
                                       style: TextStyle(
-                                          fontSize: 10, color: Colors.white),
+                                          fontFamily: 'digits',
+                                          fontSize: 13,
+                                          color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -463,12 +472,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   Container(
                     width: 170,
-                    height: 60,
+                    height: 70,
                     decoration: BoxDecoration(
                       color: CustomeColors.blue,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Expanded(
+                    child: Center(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: BackdropFilter(
@@ -477,10 +486,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             color: Colors.transparent,
                             child: const Center(
                               child: Text(
-                                'Add to Cart',
+                                'افزودن به سبد خرید',
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: 'vazir',
                                     color: Colors.white),
                               ),
                             ),
@@ -492,7 +502,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ],
               ),
             ],
-          )
+          ),
         ],
       ),
     );
