@@ -10,8 +10,10 @@ class ProductDetailsBloc
 
   ProductDetailsBloc() : super(LoadingProductDetailsState()) {
     on<RequestProductDetailsEvent>((event, emit) async {
-      var response = await repositry.productImageList(event.product_id);
-      emit(ResponseProductDetailsState(response));
+      var productImageList = await repositry.productImageList(event.product_id);
+      var productVariantList =
+          await repositry.productVariantList(event.product_id);
+      emit(ResponseProductDetailsState(productImageList, productVariantList));
     });
   }
 }

@@ -1,7 +1,7 @@
 import 'package:digikala/bloc/homeBloc/HomeBloc.dart';
 import 'package:digikala/bloc/homeBloc/HomeEvent.dart';
 import 'package:digikala/bloc/homeBloc/HomeState.dart';
-import 'package:digikala/constants/CustomColors.dart';
+
 import 'package:digikala/screens/LoadingWidget.dart';
 import 'package:digikala/widgets/BannerWidget.dart';
 
@@ -9,7 +9,7 @@ import 'package:digikala/widgets/CategoryList.dart';
 import 'package:digikala/widgets/CategoryTitleWidget.dart';
 import 'package:digikala/widgets/MostSoldsTitleWidget.dart';
 import 'package:digikala/widgets/MostViewedTitleWidget.dart';
-import 'package:digikala/widgets/ProductItem.dart';
+
 import 'package:digikala/widgets/ProductList.dart';
 import 'package:digikala/widgets/SearchBox.dart';
 import 'package:digikala/widgets/ShowingError.dart';

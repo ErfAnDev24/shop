@@ -6,7 +6,10 @@ import 'package:digikala/bloc/productDetailsBloc/ProductDetailsEvent.dart';
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsState.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/models/Product.dart';
-import 'package:digikala/screens/LoadingWidget.dart';
+import 'package:digikala/widgets/SelectColorWidget.dart';
+import 'package:digikala/widgets/SelectLocalStorageWidget.dart';
+import 'package:digikala/widgets/VariantComponentGenerator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +28,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     BlocProvider.of<ProductDetailsBloc>(context)
-        .add(RequestProductDetailsEvent(widget.product.id));
+        .add(RequestProductDetailsEvent('at0y1gm0t65j62j'));
     super.initState();
   }
 
@@ -37,82 +40,80 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         backgroundColor: const Color(0xffEEEEEE),
         toolbarHeight: 0,
       ),
-      body: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
-        builder: (context, state) {
-          if (state is LoadingProductDetailsState) {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: 20,
+      body: Column(
+        children: [
+          const SizedBox(
+            width: double.infinity,
+          ),
+          Container(
+            width: 350,
+            height: 45,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Image(
+                    image: AssetImage('images/appleLogo.png'),
+                  ),
                 ),
-                child: SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: CircularProgressIndicator(),
+                Text(
+                  'آیفون',
+                  style: TextStyle(
+                      fontFamily: 'vazir',
+                      color: CustomeColors.blue,
+                      fontWeight: FontWeight.bold),
                 ),
-              ),
-            );
-          } else if (state is ResponseProductDetailsState) {
-            return state.productImageList.fold((left) {
-              return Text(left);
-            }, (right) {
-              return Column(
-                children: [
-                  const SizedBox(
-                    width: double.infinity,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Image(
+                    image: AssetImage('images/goInBlack.png'),
                   ),
-                  Container(
-                    width: 350,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Text(
+            '${widget.product.name}',
+            style: const TextStyle(
+                fontFamily: 'vazir', fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            width: 350,
+            height: 240,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+              builder: (context, state) {
+                if (state is LoadingProductDetailsState) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 20,
+                      ),
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
-                    child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            child: Image(
-                              image: AssetImage('images/appleLogo.png'),
-                            ),
-                          ),
-                          Text(
-                            'آیفون',
-                            style: TextStyle(
-                                fontFamily: 'vazir',
-                                color: CustomeColors.blue,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            child: Image(
-                              image: AssetImage('images/goInBlack.png'),
-                            ),
-                          ),
-                        ]),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    '${widget.product.name}',
-                    style: const TextStyle(
-                        fontFamily: 'vazir',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    width: 350,
-                    height: 240,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
+                  );
+                } else if (state is ResponseProductDetailsState) {
+                  return state.productImageList.fold((left) => Text(left),
+                      (right) {
+                    return Column(
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,19 +134,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                             ),
                             const Spacer(),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, right: 10),
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 110,
-                                  child: CachedNetworkImage(
-                                      imageUrl: right.isNotEmpty
-                                          ? right[selectedIndex].imgaeURL
-                                          : widget.product.imageURL),
-                                ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, right: 10),
+                              child: SizedBox(
+                                width: 110,
+                                height: 110,
+                                child: CachedNetworkImage(
+                                    imageUrl: right.isNotEmpty
+                                        ? right[selectedIndex].imgaeURL
+                                        : widget.product.imageURL),
                               ),
                             ),
                             const Spacer(),
@@ -202,383 +200,306 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                         ),
                       ],
+                    );
+                  });
+                }
+
+                return const Text('error');
+              },
+            ),
+          ),
+          BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+            builder: (context, state) {
+              if (state is LoadingProductDetailsState) {
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: 20,
+                    ),
+                    child: SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: CircularProgressIndicator(),
                     ),
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 32, vertical: 15),
-                        child: Text(
-                          'انتخاب رنگ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontFamily: 'vazir'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30,
-                    width: double.infinity,
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 22),
-                        child: ListView.builder(
-                          itemCount: 3,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: 30,
-                              height: 25,
-                              margin: const EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.red,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                );
+              } else if (state is ResponseProductDetailsState) {
+                return state.productVariantList.fold((left) => Text(left),
+                    (right) {
+                  return VariantComponentGenerator(productVariantList: right);
+                });
+              }
+              return const Text('error');
+            },
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            width: 350,
+            height: 45,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(width: 2, color: CustomeColors.grey),
+            ),
+            child: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Text(
+                      'مشخصات فنی : ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontFamily: 'vazir'),
                     ),
                   ),
-                  const Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 32, vertical: 15),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Text(
-                          'انتخاب حافظه داخلی',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontFamily: 'vazir'),
-                        ),
-                      ),
+                  Spacer(),
+                  Text(
+                    'مشاهده',
+                    style: TextStyle(
+                        color: CustomeColors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'vazir'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    child: Image(
+                      image: AssetImage('images/goIn.png'),
                     ),
-                  ),
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                      ),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 30,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: 75,
-                              height: 30,
-                              margin: const EdgeInsets.only(left: 15),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    width: 2, color: CustomeColors.grey),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  '128',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'digits'),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    width: 350,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(width: 2, color: CustomeColors.grey),
-                    ),
-                    child: const Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: 15),
-                            child: Text(
-                              'مشخصات فنی : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'vazir'),
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            'مشاهده',
-                            style: TextStyle(
-                                color: CustomeColors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'vazir'),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 20, right: 10),
-                            child: Image(
-                              image: AssetImage('images/goIn.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    width: 350,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(width: 2, color: CustomeColors.grey),
-                    ),
-                    child: const Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: 15),
-                            child: Text(
-                              'توضیحات محصول : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'vazir'),
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            'مشاهده',
-                            style: TextStyle(
-                                color: CustomeColors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'vazir'),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 20, right: 10),
-                            child: Image(
-                              image: AssetImage('images/goIn.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    width: 350,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(width: 2, color: CustomeColors.grey),
-                    ),
-                    child: const Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: 15),
-                            child: Text(
-                              'نظرات کاربران : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'vazir'),
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            'مشاهده',
-                            style: TextStyle(
-                                color: CustomeColors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'vazir'),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 20, right: 10),
-                            child: Image(
-                              image: AssetImage('images/goIn.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            width: 150,
-                            height: 10,
-                            decoration: const BoxDecoration(
-                              color: CustomeColors.green,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 170,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: CustomeColors.green,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Center(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: BackdropFilter(
-                                  filter:
-                                      ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                                  child: Container(
-                                    color: Colors.transparent,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        const Padding(
-                                          padding: EdgeInsets.only(left: 8),
-                                          child: Text(
-                                            'تومان',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: 'vazir',
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        const Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '17800000',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: 'digits',
-                                                color: Colors.white,
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                              ),
-                                            ),
-                                            Text(
-                                              '17800000',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontFamily: 'digits',
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: 30,
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                            color: CustomeColors.red,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: const Center(
-                                            child: Text(
-                                              '%4',
-                                              style: TextStyle(
-                                                  fontFamily: 'digits',
-                                                  fontSize: 13,
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            width: 150,
-                            height: 10,
-                            decoration: const BoxDecoration(
-                              color: CustomeColors.blue,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 170,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: CustomeColors.blue,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Center(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: BackdropFilter(
-                                  filter:
-                                      ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                                  child: Container(
-                                    color: Colors.transparent,
-                                    child: const Center(
-                                      child: Text(
-                                        'افزودن به سبد خرید',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'vazir',
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
                   ),
                 ],
-              );
-            });
-          }
-
-          return const Text('error');
-        },
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            width: 350,
+            height: 45,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(width: 2, color: CustomeColors.grey),
+            ),
+            child: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Text(
+                      'توضیحات محصول : ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontFamily: 'vazir'),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'مشاهده',
+                    style: TextStyle(
+                        color: CustomeColors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'vazir'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    child: Image(
+                      image: AssetImage('images/goIn.png'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            width: 350,
+            height: 45,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(width: 2, color: CustomeColors.grey),
+            ),
+            child: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Text(
+                      'نظرات کاربران : ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontFamily: 'vazir'),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'مشاهده',
+                    style: TextStyle(
+                        color: CustomeColors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'vazir'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    child: Image(
+                      image: AssetImage('images/goIn.png'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    width: 150,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: CustomeColors.green,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 170,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      color: CustomeColors.green,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 8),
+                                  child: Text(
+                                    'تومان',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'vazir',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '17800000',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'digits',
+                                        color: Colors.white,
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    ),
+                                    Text(
+                                      '17800000',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'digits',
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 30,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    color: CustomeColors.red,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      '%4',
+                                      style: TextStyle(
+                                          fontFamily: 'digits',
+                                          fontSize: 13,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Column(
+                children: [
+                  Container(
+                    width: 150,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: CustomeColors.blue,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 170,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      color: CustomeColors.blue,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: const Center(
+                              child: Text(
+                                'افزودن به سبد خرید',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'vazir',
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
