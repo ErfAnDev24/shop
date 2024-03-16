@@ -5,24 +5,27 @@ import 'package:digikala/bloc/productDetailsBloc/ProductDetailsBloc.dart';
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsEvent.dart';
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsState.dart';
 import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/models/Product.dart';
 import 'package:digikala/screens/LoadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  String productId;
+  Product product;
 
-  ProductDetailsScreen({super.key, required this.productId});
+  ProductDetailsScreen({super.key, required this.product});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  int selectedIndex = 0;
+
   @override
   void initState() {
     BlocProvider.of<ProductDetailsBloc>(context)
-        .add(RequestProductDetailsEvent(widget.productId));
+        .add(RequestProductDetailsEvent(widget.product.id));
     super.initState();
   }
 
@@ -92,9 +95,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  const Text(
-                    '2022 SE آیفون',
-                    style: TextStyle(
+                  Text(
+                    '${widget.product.name}',
+                    style: const TextStyle(
                         fontFamily: 'vazir',
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
@@ -111,16 +114,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     child: Column(
                       children: [
-                        const Row(
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.only(top: 10, left: 15),
                               child: Image(
                                 image: AssetImage('images/start.png'),
                               ),
                             ),
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.only(top: 10, left: 5),
                               child: Text(
                                 '4.6',
@@ -129,19 +132,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     fontFamily: 'digits'),
                               ),
                             ),
-                            Spacer(),
-                            Padding(
-                              padding: EdgeInsets.only(top: 20, right: 10),
-                              child: SizedBox(
-                                width: 110,
-                                height: 110,
-                                child: Image(
-                                  image: AssetImage('images/iphone_se.png'),
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20, right: 10),
+                                child: SizedBox(
+                                  width: 110,
+                                  height: 110,
+                                  child: CachedNetworkImage(
+                                      imageUrl: right.isNotEmpty
+                                          ? right[selectedIndex].imgaeURL
+                                          : widget.product.imageURL),
                                 ),
                               ),
                             ),
-                            Spacer(),
-                            Padding(
+                            const Spacer(),
+                            const Padding(
                               padding: EdgeInsets.only(top: 10, right: 20),
                               child: Image(
                                 image: AssetImage('images/like.png'),
@@ -159,23 +167,33 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: right.length,
+                              itemCount: right.isNotEmpty ? right.length : 1,
                               itemBuilder: (context, index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  child: Container(
-                                    width: 70,
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1, color: CustomeColors.grey),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: CachedNetworkImage(
-                                          imageUrl: right[index].imgaeURL),
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedIndex = index;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    child: Container(
+                                      width: 70,
+                                      height: 70,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: CustomeColors.grey),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: CachedNetworkImage(
+                                            imageUrl: right.isNotEmpty
+                                                ? right[index].imgaeURL
+                                                : widget.product.imageURL),
+                                      ),
                                     ),
                                   ),
                                 );
