@@ -141,7 +141,7 @@ class _ApplicationState extends State<Application> {
         create: (context) => CategoryBloc(),
         child: const CategoryScreen(),
       ),
-      const ProductScreen(),
+      const AccountScreen(),
       const AccountScreen(),
     ];
   }

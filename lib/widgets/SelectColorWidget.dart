@@ -1,8 +1,10 @@
+import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/models/ProductVariant.dart';
 import 'package:flutter/material.dart';
 
 class SelectColorWidget extends StatefulWidget {
   ProductVariant productVariant;
+
   SelectColorWidget({super.key, required this.productVariant});
 
   @override
@@ -10,6 +12,7 @@ class SelectColorWidget extends StatefulWidget {
 }
 
 class _SelectColorWidgetState extends State<SelectColorWidget> {
+  int selectedColor = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,7 +21,7 @@ class _SelectColorWidgetState extends State<SelectColorWidget> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
               child: Text(
                 'انتخاب رنگ',
                 style:
@@ -28,25 +31,46 @@ class _SelectColorWidgetState extends State<SelectColorWidget> {
           ],
         ),
         SizedBox(
-          height: 30,
+          height: 35,
           width: double.infinity,
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: Padding(
-              padding: const EdgeInsets.only(right: 22),
+              padding: const EdgeInsets.only(right: 2),
               child: ListView.builder(
                 itemCount: widget.productVariant.variantList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Container(
-                    width: 30,
-                    height: 25,
-                    margin: const EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color(
-                        int.parse(
-                            '0xff${widget.productVariant.variantList[index].value}'),
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedColor = index;
+                      });
+                    },
+                    child: Container(
+                      width: 35,
+                      height: 30,
+                      margin: const EdgeInsets.only(right: 10),
+                      decoration: BoxDecoration(
+                          border: selectedColor == index
+                              ? Border.all(
+                                  width: 2,
+                                  color: CustomeColors.blue,
+                                  strokeAlign: BorderSide.strokeAlignOutside)
+                              : Border.all(style: BorderStyle.none),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.transparent),
+                      child: Padding(
+                        padding: const EdgeInsets.all(3),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(
+                              int.parse(
+                                  '0xff${widget.productVariant.variantList[index].value}'),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   );

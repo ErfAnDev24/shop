@@ -10,6 +10,9 @@ abstract class IProductRepository {
   Future<Either<String, List<Product>>> bestSellerList();
 
   Future<Either<String, List<Product>>> mostViewedList();
+
+  Future<Either<String, List<Product>>> productListByCategoryId(
+      String categortyId);
 }
 
 class ProductRepositoryImpl implements IProductRepository {
@@ -39,6 +42,17 @@ class ProductRepositoryImpl implements IProductRepository {
   Future<Either<String, List<Product>>> mostViewedList() async {
     try {
       var response = await datasource.mostViewedList();
+      return Right(response);
+    } on ApiException catch (ex) {
+      return Left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, List<Product>>> productListByCategoryId(
+      String categortyId) async {
+    try {
+      var response = await datasource.productListByCategoryId(categortyId);
       return Right(response);
     } on ApiException catch (ex) {
       return Left(ex.message);

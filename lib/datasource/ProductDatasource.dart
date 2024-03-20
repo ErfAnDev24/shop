@@ -9,6 +9,8 @@ abstract class IProductDatasource {
   Future<List<Product>> bestSellerList();
 
   Future<List<Product>> mostViewedList();
+
+  Future<List<Product>> productListByCategoryId(String categoryId);
 }
 
 class ProductDatasourceImpl implements IProductDatasource {
@@ -68,6 +70,33 @@ class ProductDatasourceImpl implements IProductDatasource {
       return productList;
     } catch (ex) {
       throw ApiException('an error has been ouccred through getting products');
+    }
+  }
+
+  @override
+  Future<List<Product>> productListByCategoryId(String categoryId) async {
+    try {
+      Response response;
+
+      if (categoryId == 'qnbj8d6b9lzzpn8') {
+        response = await dio.get('collections/products/records');
+      } else {
+        Map<String, String> qParams = {'filter': 'category="$categoryId"'};
+
+        response = await dio.get('collections/products/records',
+            queryParameters: qParams);
+      }
+
+      var jsonObjectList = response.data['items'];
+
+      List<Product> productList = jsonObjectList
+          .map<Product>((jsonObject) => Product.buildFromJsonObject(jsonObject))
+          .toList();
+
+      return productList;
+    } catch (ex) {
+      throw ApiException(
+          'an error has been ouccred through getting products BY CATEGORY_ID');
     }
   }
 }

@@ -13,7 +13,10 @@ class ProductDetailsBloc
       var productImageList = await repositry.productImageList(event.product_id);
       var productVariantList =
           await repositry.productVariantList(event.product_id);
-      emit(ResponseProductDetailsState(productImageList, productVariantList));
+      var propertyList = await repositry.propertyList(event.product_id);
+      var category = await repositry.category(event.categoryId);
+      emit(ResponseProductDetailsState(
+          productImageList, productVariantList, propertyList, category));
     });
   }
 }
