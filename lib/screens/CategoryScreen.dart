@@ -1,8 +1,10 @@
 import 'package:digikala/bloc/categoryScreenBloc/CategoryBloc.dart';
 import 'package:digikala/bloc/categoryScreenBloc/CategoryEvent.dart';
 import 'package:digikala/bloc/categoryScreenBloc/CategoryState.dart';
+import 'package:digikala/bloc/productScreenBloc/ProductBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/screens/CategoryItem.dart';
+import 'package:digikala/screens/ProductScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,10 +51,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       ),
                     ),
                     Text(
-                      'Category',
+                      'دسته بندی',
                       style: TextStyle(
-                          color: CustomeColors.grey,
-                          fontWeight: FontWeight.bold),
+                          color: CustomeColors.blue,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'vazir'),
                     ),
                   ]),
                 ),
@@ -92,13 +95,28 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               crossAxisSpacing: 20),
                       itemCount: right.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                  create: (context) => ProductBloc(),
+                                  child: ProductScreen(
+                                    categoryId: right[index].id,
+                                    categoryName: right[index].title,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 150,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: CategoryItem(category: right[index]),
                           ),
-                          child: CategoryItem(category: right[index]),
                         );
                       },
                     ),

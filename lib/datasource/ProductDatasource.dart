@@ -1,4 +1,5 @@
 import 'package:digikala/di/ServiceLocator.dart';
+import 'package:digikala/models/Category.dart';
 import 'package:digikala/models/Product.dart';
 import 'package:digikala/util/ApiException.dart';
 import 'package:dio/dio.dart';
@@ -11,6 +12,8 @@ abstract class IProductDatasource {
   Future<List<Product>> mostViewedList();
 
   Future<List<Product>> productListByCategoryId(String categoryId);
+
+  Future<Category> category(String categoryId);
 }
 
 class ProductDatasourceImpl implements IProductDatasource {
@@ -97,6 +100,24 @@ class ProductDatasourceImpl implements IProductDatasource {
     } catch (ex) {
       throw ApiException(
           'an error has been ouccred through getting products BY CATEGORY_ID');
+    }
+  }
+
+  @override
+  Future<Category> category(String categoryId) async {
+    try {
+      Map<String, String> qParams = {'filter': 'id="$categoryId"'};
+      var response = await dio.get('collections/category/records',
+          queryParameters: qParams);
+      var jsonObjectList = response.data['items'];
+      List<Category> category = jsonObjectList
+          .map<Category>(
+              (jsonObject) => Category.buildObjectFromJson(jsonObject))
+          .toList();
+
+      return category[0];
+    } catch (ex) {
+      throw ApiException('error in getting category title');
     }
   }
 }

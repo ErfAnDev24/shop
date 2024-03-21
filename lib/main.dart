@@ -4,14 +4,21 @@ import 'package:digikala/bloc/categoryScreenBloc/CategoryBloc.dart';
 import 'package:digikala/bloc/homeBloc/HomeBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/di/ServiceLocator.dart';
+import 'package:digikala/models/SelectedCartItem.dart';
 import 'package:digikala/screens/AccountScreen.dart';
+import 'package:digikala/screens/CartScreen.dart';
 import 'package:digikala/screens/CategoryScreen.dart';
 import 'package:digikala/screens/HomeScreen.dart';
 import 'package:digikala/screens/ProductScreen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter;
+  Hive.registerAdapter(SelectedCartItemAdapter());
+  Hive.openBox<SelectedCartItem>('cartItems');
   runApp(Application());
 }
 
@@ -50,6 +57,8 @@ class _ApplicationState extends State<Application> {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
             child: BottomNavigationBar(
+                selectedLabelStyle: const TextStyle(fontFamily: 'vazir'),
+                unselectedLabelStyle: const TextStyle(fontFamily: 'vazir'),
                 type: BottomNavigationBarType.fixed,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -71,7 +80,7 @@ class _ApplicationState extends State<Application> {
                         image: AssetImage('images/icon_home.png'),
                       ),
                     ),
-                    label: 'Home',
+                    label: 'خانه',
                     activeIcon: Padding(
                       padding: EdgeInsets.only(top: 10, bottom: 3),
                       child: Image(
@@ -86,7 +95,7 @@ class _ApplicationState extends State<Application> {
                         image: AssetImage('images/icon_category.png'),
                       ),
                     ),
-                    label: 'Category',
+                    label: 'دسته بندی',
                     activeIcon: Padding(
                       padding: EdgeInsets.only(top: 10, bottom: 3),
                       child: Image(
@@ -101,7 +110,7 @@ class _ApplicationState extends State<Application> {
                         image: AssetImage('images/icon_basket.png'),
                       ),
                     ),
-                    label: 'Cart',
+                    label: 'سبد خرید',
                     activeIcon: Padding(
                       padding: EdgeInsets.only(top: 10, bottom: 3),
                       child: Image(
@@ -116,7 +125,7 @@ class _ApplicationState extends State<Application> {
                         image: AssetImage('images/icon_profile.png'),
                       ),
                     ),
-                    label: 'Account',
+                    label: 'حساب کاربری',
                     activeIcon: Padding(
                       padding: EdgeInsets.only(top: 10, bottom: 3),
                       child: Image(
@@ -141,7 +150,7 @@ class _ApplicationState extends State<Application> {
         create: (context) => CategoryBloc(),
         child: const CategoryScreen(),
       ),
-      const AccountScreen(),
+      const CartScreen(),
       const AccountScreen(),
     ];
   }

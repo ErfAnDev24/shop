@@ -1,5 +1,6 @@
 import 'package:digikala/datasource/ProductDatasource.dart';
 import 'package:digikala/di/ServiceLocator.dart';
+import 'package:digikala/models/Category.dart';
 import 'package:digikala/models/Product.dart';
 import 'package:digikala/util/ApiException.dart';
 import 'package:either_dart/either.dart';
@@ -13,6 +14,7 @@ abstract class IProductRepository {
 
   Future<Either<String, List<Product>>> productListByCategoryId(
       String categortyId);
+  Future<Either<String, Category>> category(String categoryId);
 }
 
 class ProductRepositoryImpl implements IProductRepository {
@@ -53,6 +55,16 @@ class ProductRepositoryImpl implements IProductRepository {
       String categortyId) async {
     try {
       var response = await datasource.productListByCategoryId(categortyId);
+      return Right(response);
+    } on ApiException catch (ex) {
+      return Left(ex.message);
+    }
+  }
+
+  @override
+  Future<Either<String, Category>> category(String categoryId) async {
+    try {
+      var response = await datasource.category(categoryId);
       return Right(response);
     } on ApiException catch (ex) {
       return Left(ex.message);

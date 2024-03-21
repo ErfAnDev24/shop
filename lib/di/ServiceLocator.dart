@@ -1,10 +1,12 @@
 import 'package:digikala/datasource/AuthenticationRemote.dart';
 import 'package:digikala/datasource/BannerDatasource.dart';
+import 'package:digikala/datasource/CartDatasource.dart';
 import 'package:digikala/datasource/CategoryDatasource.dart';
 import 'package:digikala/datasource/ProductDatasource.dart';
 import 'package:digikala/datasource/ProductDetailsDatasource.dart';
 import 'package:digikala/repository/AuthenticationRepository.dart';
 import 'package:digikala/repository/BannerRepository.dart';
+import 'package:digikala/repository/CartRepository.dart';
 import 'package:digikala/repository/CategoryRepository.dart';
 import 'package:digikala/repository/ProductDetailsRepository.dart';
 import 'package:digikala/repository/ProductRepository.dart';
@@ -42,6 +44,10 @@ void initLocators() async {
 
   locator.registerFactory<IProductDetailsRepository>(
       () => ProductDetailsRepositoryImpl());
+
+  locator.registerFactory<ICartDatasource>(() => CartDatasourceImpl());
+
+  locator.registerFactory<ICartRepository>(() => CartRepositoryImpl());
 
   locator.registerSingleton<SharedPreferences>(
       await SharedPreferences.getInstance());

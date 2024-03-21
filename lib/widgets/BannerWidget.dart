@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:digikala/bloc/productScreenBloc/ProductBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/models/Banner.dart';
+import 'package:digikala/screens/ProductScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BannerWidget extends StatelessWidget {
@@ -36,27 +39,43 @@ class BannerWidget extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: CachedNetworkImage(
-                          errorListener: (value) {
-                            Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: const Color.fromARGB(93, 246, 154, 147),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                  create: (context) => ProductBloc(),
+                                  child: ProductScreen(
+                                    categoryId: bannerList[index].categoryId,
+                                    categoryName: 'دسته بندی',
+                                  ),
+                                ),
                               ),
                             );
                           },
-                          imageUrl: bannerList[index].imageURL,
-                          placeholder: (context, url) {
-                            return Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
+                          child: CachedNetworkImage(
+                            errorListener: (value) {
+                              Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: CustomeColors.grey),
-                            );
-                          },
+                                  color:
+                                      const Color.fromARGB(93, 246, 154, 147),
+                                ),
+                              );
+                            },
+                            imageUrl: bannerList[index].imageURL,
+                            placeholder: (context, url) {
+                              return Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: CustomeColors.grey),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),

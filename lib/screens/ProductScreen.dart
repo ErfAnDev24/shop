@@ -23,6 +23,7 @@ class _ProductScreenState extends State<ProductScreen> {
   void initState() {
     BlocProvider.of<ProductBloc>(context)
         .add(ProductRequestEvent(widget.categoryId));
+
     super.initState();
   }
 
