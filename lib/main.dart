@@ -1,5 +1,7 @@
 import 'dart:ui';
-
+import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
+import 'package:digikala/screens/HomeScreen.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:digikala/bloc/categoryScreenBloc/CategoryBloc.dart';
 import 'package:digikala/bloc/homeBloc/HomeBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
@@ -8,17 +10,15 @@ import 'package:digikala/models/SelectedCartItem.dart';
 import 'package:digikala/screens/AccountScreen.dart';
 import 'package:digikala/screens/CartScreen.dart';
 import 'package:digikala/screens/CategoryScreen.dart';
-import 'package:digikala/screens/HomeScreen.dart';
-import 'package:digikala/screens/ProductScreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 
 void main() async {
-  await Hive.initFlutter;
+  await Hive.initFlutter();
   Hive.registerAdapter(SelectedCartItemAdapter());
-  Hive.openBox<SelectedCartItem>('cartItems');
+  await Hive.openBox<SelectedCartItem>('cartItems');
   runApp(Application());
 }
 
@@ -150,7 +150,10 @@ class _ApplicationState extends State<Application> {
         create: (context) => CategoryBloc(),
         child: const CategoryScreen(),
       ),
-      const CartScreen(),
+      BlocProvider(
+        create: (context) => locator.get<CartBloc>(),
+        child: CartScreen(),
+      ),
       const AccountScreen(),
     ];
   }

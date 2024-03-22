@@ -1,9 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/models/SelectedCartItem.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 class CartItem extends StatefulWidget {
-  const CartItem({super.key});
+  SelectedCartItem selectedCartItem;
+
+  CartItem({super.key, required this.selectedCartItem});
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -38,11 +42,11 @@ class _CartItemState extends State<CartItem> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'آیفون 13 پرومکس بی سیم خفن عجیبنا غریبا یسبشبق',
+                            Text(
+                              '${widget.selectedCartItem.name}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'vazir',
                                   fontWeight: FontWeight.bold),
                             ),
@@ -60,9 +64,9 @@ class _CartItemState extends State<CartItem> {
                               padding: const EdgeInsets.symmetric(vertical: 3),
                               child: Row(
                                 children: [
-                                  const Text(
-                                    '45000000 تومان',
-                                    style: TextStyle(
+                                  Text(
+                                    '${widget.selectedCartItem.realPrice} تومان',
+                                    style: const TextStyle(
                                         fontFamily: 'digits',
                                         color: CustomeColors.grey,
                                         fontSize: 15),
@@ -77,10 +81,10 @@ class _CartItemState extends State<CartItem> {
                                       color: CustomeColors.red,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
-                                        '%4',
-                                        style: TextStyle(
+                                        '%${widget.selectedCartItem.percent}',
+                                        style: const TextStyle(
                                             fontSize: 12,
                                             color: Colors.white,
                                             fontFamily: 'digits'),
@@ -171,12 +175,13 @@ class _CartItemState extends State<CartItem> {
                       ),
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     flex: 3,
                     child: SizedBox(
                       width: 80,
                       height: 120,
-                      child: Image(image: AssetImage('images/iphone_se.png')),
+                      child: CachedNetworkImage(
+                          imageUrl: widget.selectedCartItem.imageURL),
                     ),
                   ),
                 ],
@@ -195,23 +200,24 @@ class _CartItemState extends State<CartItem> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-                child: const Center(
+                child: Center(
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'تومان',
                       style: TextStyle(
                           fontFamily: 'vazir',
                           fontSize: 17,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      '450000000',
-                      style: TextStyle(fontFamily: 'digits', fontSize: 20),
+                      '${widget.selectedCartItem.price}',
+                      style:
+                          const TextStyle(fontFamily: 'digits', fontSize: 20),
                     ),
                   ],
                 )),

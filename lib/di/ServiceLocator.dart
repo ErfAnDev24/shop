@@ -1,3 +1,4 @@
+import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
 import 'package:digikala/datasource/AuthenticationRemote.dart';
 import 'package:digikala/datasource/BannerDatasource.dart';
 import 'package:digikala/datasource/CartDatasource.dart';
@@ -48,6 +49,8 @@ void initLocators() async {
   locator.registerFactory<ICartDatasource>(() => CartDatasourceImpl());
 
   locator.registerFactory<ICartRepository>(() => CartRepositoryImpl());
+
+  locator.registerSingleton<CartBloc>(CartBloc());
 
   locator.registerSingleton<SharedPreferences>(
       await SharedPreferences.getInstance());

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsBloc.dart';
 import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/models/Product.dart';
 import 'package:digikala/screens/ProductDetailsScreen.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +25,12 @@ class ProductItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => BlocProvider(
-              create: (context) => ProductDetailsBloc(),
-              child: ProductDetailsScreen(product: product),
-            ),
+            builder: (context) {
+              return BlocProvider.value(
+                value: locator.get<CartBloc>(),
+                child: ProductDetailsScreen(product: product),
+              );
+            },
           ),
         );
       },

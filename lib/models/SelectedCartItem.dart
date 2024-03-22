@@ -19,6 +19,9 @@ class SelectedCartItem extends HiveObject {
   @HiveField(4)
   String percent;
 
-  SelectedCartItem(
-      this.name, this.discount, this.percent, this.price, this.realPrice);
+  @HiveField(5)
+  String imageURL;
+
+  SelectedCartItem(this.name, this.discount, this.percent, this.price,
+      this.realPrice, this.imageURL);
 }

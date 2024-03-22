@@ -1,6 +1,8 @@
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsEvent.dart';
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsState.dart';
 import 'package:digikala/di/ServiceLocator.dart';
+import 'package:digikala/models/SelectedCartItem.dart';
+import 'package:digikala/repository/CartRepository.dart';
 import 'package:digikala/repository/ProductDetailsRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

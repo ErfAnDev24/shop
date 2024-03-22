@@ -1,15 +1,26 @@
+import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
+import 'package:digikala/bloc/cartScreenBloc/CartEvent.dart';
+import 'package:digikala/bloc/cartScreenBloc/CartState.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/widgets/CartItem.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  CartScreen({super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
+  int totalAmount = 0;
+  @override
+  void initState() {
+    BlocProvider.of<CartBloc>(context).add(RequestCartEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,48 +29,83 @@ class _CartScreenState extends State<CartScreen> {
         backgroundColor: const Color(0xffEEEEEE),
       ),
       backgroundColor: const Color(0xffEEEEEE),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Container(
-                width: 360,
-                height: 45,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Stack(alignment: Alignment.center, children: [
-                    Positioned(
-                      left: 0,
-                      child: Image(
-                        image: AssetImage('images/appleLogo.png'),
-                      ),
-                    ),
-                    Text(
-                      'سبد خرید',
-                      style: TextStyle(
-                          color: CustomeColors.blue,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'vazir'),
-                    ),
-                  ]),
+      body: BlocBuilder<CartBloc, CartState>(
+        builder: (context, state) {
+          if (state is CartLoadingState) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: CircularProgressIndicator(),
                 ),
               ),
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-            sliver: SliverList.builder(
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return CartItem();
+            );
+          } else if (state is ResponseCartState) {
+            return state.selectedCartItemList.fold(
+              (left) => Text(left),
+              (right) {
+                totalAmount = right.fold(
+                    0,
+                    (previousValue, element) =>
+                        previousValue + int.parse(element.price));
+                return CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Container(
+                          width: 360,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Positioned(
+                                  left: 0,
+                                  child: Image(
+                                    image: AssetImage('images/appleLogo.png'),
+                                  ),
+                                ),
+                                Text(
+                                  'سبد خرید',
+                                  style: TextStyle(
+                                      color: CustomeColors.blue,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'vazir'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
+                      sliver: SliverList.builder(
+                        itemCount: right.length,
+                        itemBuilder: (context, index) {
+                          return CartItem(selectedCartItem: right[index]);
+                        },
+                      ),
+                    ),
+                    const SliverPadding(
+                      padding: EdgeInsets.only(bottom: 90),
+                    ),
+                  ],
+                );
               },
-            ),
-          ),
-        ],
+            );
+          }
+
+          return const Text('data');
+        },
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(left: 20),
@@ -72,21 +118,21 @@ class _CartScreenState extends State<CartScreen> {
               borderRadius: BorderRadius.circular(15),
               color: CustomeColors.green,
             ),
-            child: const Center(
+            child: Center(
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'تومان',
                   style: TextStyle(
                       color: Colors.white, fontFamily: 'vazir', fontSize: 18),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  '3218000000',
-                  style: TextStyle(
+                  totalAmount == 0 ? '0' : '$totalAmount',
+                  style: const TextStyle(
                       color: Colors.white, fontFamily: 'digits', fontSize: 25),
                 ),
               ],
