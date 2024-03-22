@@ -143,7 +143,7 @@ class _ApplicationState extends State<Application> {
   List<Widget> screens() {
     return [
       BlocProvider(
-        create: (context) => HomeBloc(),
+        create: (context) => locator.get<HomeBloc>(),
         child: const HomeScreen(),
       ),
       BlocProvider(

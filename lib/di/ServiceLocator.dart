@@ -1,10 +1,12 @@
 import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
+import 'package:digikala/bloc/homeBloc/HomeBloc.dart';
 import 'package:digikala/datasource/AuthenticationRemote.dart';
 import 'package:digikala/datasource/BannerDatasource.dart';
 import 'package:digikala/datasource/CartDatasource.dart';
 import 'package:digikala/datasource/CategoryDatasource.dart';
 import 'package:digikala/datasource/ProductDatasource.dart';
 import 'package:digikala/datasource/ProductDetailsDatasource.dart';
+import 'package:digikala/handler/PaymentHandler.dart';
 import 'package:digikala/repository/AuthenticationRepository.dart';
 import 'package:digikala/repository/BannerRepository.dart';
 import 'package:digikala/repository/CartRepository.dart';
@@ -23,6 +25,7 @@ void initLocators() async {
       BaseOptions(baseUrl: 'https://startflutter.ir/api/'),
     ),
   );
+
   locator.registerFactory<ICategoryDatasource>(() => CategoryDatasourceImpl());
 
   locator.registerFactory<ICategoryRepository>(() => CategoryRepositoryImpl());
@@ -50,6 +53,9 @@ void initLocators() async {
 
   locator.registerFactory<ICartRepository>(() => CartRepositoryImpl());
 
+  locator.registerSingleton<HomeBloc>(
+      HomeBloc(locator.get(), locator.get(), locator.get()));
+  locator.registerSingleton<PaymentHandler>(ZarinPalPaymentHandler());
   locator.registerSingleton<CartBloc>(CartBloc());
 
   locator.registerSingleton<SharedPreferences>(

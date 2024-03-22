@@ -110,7 +110,11 @@ class _CartScreenState extends State<CartScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(left: 20),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            //BlocProvider.of<CartBloc>(context).add(InitPaymentRequestEvent()); //zarinpal is off
+
+            //BlocProvider.of<CartBloc>(context).add(SendPaymentRequestEvent()); //zarinpal is off
+          },
           child: Container(
             width: 380,
             height: 75,
@@ -141,5 +145,26 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
+  }
+}
+
+String? extractValueFromQuery(String url, String key) {
+  int queryStartIndex = url.indexOf('?');
+  if (queryStartIndex == -1) return null;
+
+  String query = url.substring(queryStartIndex + 1);
+
+  List<String> pairs = query.split('&');
+
+  for (String pair in pairs) {
+    List<String> keyValue = pair.split('=');
+    if (keyValue.length == 2) {
+      String currenyKey = keyValue[0];
+      String value = keyValue[1];
+
+      if (currenyKey == key) {
+        return Uri.decodeComponent(value);
+      }
+    }
   }
 }

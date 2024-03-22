@@ -1,12 +1,14 @@
 import 'package:digikala/bloc/cartScreenBloc/CartEvent.dart';
 import 'package:digikala/bloc/cartScreenBloc/CartState.dart';
 import 'package:digikala/di/ServiceLocator.dart';
+import 'package:digikala/handler/PaymentHandler.dart';
 import 'package:digikala/models/SelectedCartItem.dart';
 import 'package:digikala/repository/CartRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final repository = locator.get<ICartRepository>();
+  final paymentHandler = locator.get<PaymentHandler>();
 
   CartBloc() : super(CartLoadingState()) {
     on<RequestCartEvent>((event, emit) {
@@ -32,5 +34,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           event.product.imageURL);
       repository.addSelectedCartItem(selectedCartItem);
     });
+
+    on<InitPaymentRequestEvent>((event, emit) {
+      paymentHandler.initPaymentRequest();
+      paymentHandler.verifyPaymentRequest();
+    });
+
+    on<SendPaymentRequestEvent>(
+      (event, emit) {
+        paymentHandler.sendPaymentRequest();
+      },
+    );
   }
 }
