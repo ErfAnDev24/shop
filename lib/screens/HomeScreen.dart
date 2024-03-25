@@ -1,6 +1,7 @@
 import 'package:digikala/bloc/homeBloc/HomeBloc.dart';
 import 'package:digikala/bloc/homeBloc/HomeEvent.dart';
 import 'package:digikala/bloc/homeBloc/HomeState.dart';
+import 'package:digikala/constants/CustomColors.dart';
 
 import 'package:digikala/screens/LoadingWidget.dart';
 import 'package:digikala/widgets/BannerWidget.dart';
@@ -15,6 +16,7 @@ import 'package:digikala/widgets/SearchBox.dart';
 import 'package:digikala/widgets/ShowingError.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,74 +40,58 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xffEEEEEE),
       ),
       backgroundColor: const Color(0xffEEEEEE),
-      body: CustomScrollView(
-        slivers: [
-          const SearchBox(),
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is LoadingHomeState) {
-                return const LoadingWidget();
-              } else if (state is HomeResponseState) {
-                return state.bannerList.fold(
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is LoadingHomeState) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: 20,
+                ),
+                child: SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: LoadingIndicator(
+                    colors: [CustomeColors.blue],
+                    indicatorType: Indicator.ballRotateChase,
+                  ),
+                ),
+              ),
+            );
+          } else if (state is HomeResponseState) {
+            return CustomScrollView(
+              slivers: [
+                const SearchBox(),
+                state.bannerList.fold(
                   (left) => const ShowingError(),
                   (right) {
                     return BannerWidget(
                       bannerList: right,
                     );
                   },
-                );
-              }
-              return const ShowingError();
-            },
-          ),
-          const CategoryTitleWidget(),
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is LoadingHomeState) {
-                return const LoadingWidget();
-              }
-
-              if (state is HomeResponseState) {
-                return state.categoryList.fold(
+                ),
+                const CategoryTitleWidget(),
+                state.categoryList.fold(
                   (left) => const ShowingError(),
                   (right) => CategoryList(
                     categoryList: right,
                   ),
-                );
-              }
-
-              return const ShowingError();
-            },
-          ),
-          const MostSoldsTitleWidget(),
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is LoadingHomeState) {
-                return const LoadingWidget();
-              } else if (state is HomeResponseState) {
-                return state.bestSellerList.fold(
+                ),
+                const MostSoldsTitleWidget(),
+                state.bestSellerList.fold(
                   (left) => const ShowingError(),
                   (right) => ProductList(productList: right),
-                );
-              }
-              return const ShowingError();
-            },
-          ),
-          const MostViewedTitleWidget(),
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is LoadingHomeState) {
-                return const LoadingWidget();
-              } else if (state is HomeResponseState) {
-                return state.mostViewedList.fold(
+                ),
+                const MostViewedTitleWidget(),
+                state.mostViewedList.fold(
                   (left) => const ShowingError(),
                   (right) => ProductList(productList: right),
-                );
-              }
-              return const ShowingError();
-            },
-          ),
-        ],
+                ),
+              ],
+            );
+          }
+          return Text('error');
+        },
       ),
     );
   }

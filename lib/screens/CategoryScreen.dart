@@ -7,6 +7,7 @@ import 'package:digikala/screens/CategoryItem.dart';
 import 'package:digikala/screens/ProductScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -68,11 +69,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 return const SliverToBoxAdapter(
                   child: Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.only(
+                        top: 20,
+                      ),
                       child: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(),
+                        width: 80,
+                        height: 80,
+                        child: LoadingIndicator(
+                          colors: [CustomeColors.blue],
+                          indicatorType: Indicator.ballRotateChase,
+                        ),
                       ),
                     ),
                   ),
