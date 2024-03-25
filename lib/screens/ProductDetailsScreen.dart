@@ -3,16 +3,17 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
 import 'package:digikala/bloc/cartScreenBloc/CartEvent.dart';
+import 'package:digikala/bloc/commentBloc/CommentBloc.dart';
+import 'package:digikala/bloc/commentBloc/CommentEvent.dart';
+import 'package:digikala/bloc/commentBloc/CommentState.dart';
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsBloc.dart';
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsEvent.dart';
 import 'package:digikala/bloc/productDetailsBloc/ProductDetailsState.dart';
 import 'package:digikala/constants/CustomColors.dart';
-import 'package:digikala/di/ServiceLocator.dart';
+
 import 'package:digikala/models/Product.dart';
 import 'package:digikala/widgets/Description.dart';
 import 'package:digikala/widgets/PropertyList.dart';
-import 'package:digikala/widgets/SelectColorWidget.dart';
-import 'package:digikala/widgets/SelectLocalStorageWidget.dart';
 import 'package:digikala/widgets/VariantComponentGenerator.dart';
 
 import 'package:flutter/material.dart';
@@ -30,6 +31,8 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int selectedIndex = 0;
+
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -267,43 +270,278 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       description: widget.product.description,
                     ),
                     SliverToBoxAdapter(
-                      child: Container(
-                        width: 350,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          border:
-                              Border.all(width: 2, color: CustomeColors.grey),
-                        ),
-                        child: const Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 15),
-                                child: Text(
-                                  'نظرات کاربران : ',
+                      child: GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isDismissible: true,
+                            isScrollControlled: true,
+                            showDragHandle: true,
+                            useSafeArea: true,
+                            builder: (context) {
+                              return SizedBox(
+                                width: double.infinity,
+                                height: 700,
+                                child: DraggableScrollableSheet(
+                                  maxChildSize: 1,
+                                  initialChildSize: 1,
+                                  minChildSize: 0.1,
+                                  builder: (context, scrollController) {
+                                    return Stack(
+                                      alignment: Alignment.bottomCenter,
+                                      children: [
+                                        CustomScrollView(
+                                          slivers: [
+                                            SliverPadding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10,
+                                                  bottom: 10,
+                                                  left: 10,
+                                                  right: 10),
+                                              sliver: BlocProvider(
+                                                create: (context) {
+                                                  var bloc = CommentBloc();
+                                                  bloc.add(RequestCommentEvent(
+                                                      widget.product.id));
+                                                  return bloc;
+                                                },
+                                                child: BlocBuilder<CommentBloc,
+                                                    CommentState>(
+                                                  builder: (context, state) {
+                                                    if (state
+                                                        is CommentLoadingState) {
+                                                      return const SliverToBoxAdapter(
+                                                        child: Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                              top: 20,
+                                                            ),
+                                                            child: SizedBox(
+                                                              width: 80,
+                                                              height: 80,
+                                                              child:
+                                                                  LoadingIndicator(
+                                                                colors: [
+                                                                  CustomeColors
+                                                                      .blue
+                                                                ],
+                                                                indicatorType:
+                                                                    Indicator
+                                                                        .ballRotateChase,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    } else if (state
+                                                        is CommentResponseState) {
+                                                      return state.commentList
+                                                          .fold(
+                                                        (left) =>
+                                                            SliverToBoxAdapter(
+                                                          child: Text(left),
+                                                        ),
+                                                        (right) {
+                                                          return SliverList
+                                                              .builder(
+                                                            itemCount:
+                                                                right.length,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              return SizedBox(
+                                                                width: double
+                                                                    .infinity,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          bottom:
+                                                                              16),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Expanded(
+                                                                        flex: 7,
+                                                                        child: Column(
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.end,
+                                                                            children: [
+                                                                              Text(
+                                                                                '${right[index].name}' ?? 'کاریر',
+                                                                                style: const TextStyle(fontFamily: 'vazir', fontWeight: FontWeight.bold),
+                                                                              ),
+                                                                              const SizedBox(
+                                                                                height: 5,
+                                                                              ),
+                                                                              Text(
+                                                                                '${right[index].text}',
+                                                                                textAlign: TextAlign.end,
+                                                                                style: const TextStyle(fontFamily: 'vazir', fontSize: 13, color: CustomeColors.grey),
+                                                                              ),
+                                                                            ]),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            5,
+                                                                      ),
+                                                                      Expanded(
+                                                                        flex: 2,
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              70,
+                                                                          height:
+                                                                              70,
+                                                                          decoration: const BoxDecoration(
+                                                                              shape: BoxShape.circle,
+                                                                              image: DecorationImage(image: AssetImage('images/profile.jpg'))),
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                    return const SliverToBoxAdapter(
+                                                        child: Text('error'));
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            const SliverPadding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 120)),
+                                          ],
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              bottom: MediaQuery.of(context)
+                                                  .viewInsets
+                                                  .bottom),
+                                          width: double.infinity,
+                                          height: 170,
+                                          decoration: const BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 207, 207, 207),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(15),
+                                              topRight: Radius.circular(15),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  vertical: 10,
+                                                  horizontal: 20,
+                                                ),
+                                                child: TextField(
+                                                  decoration: InputDecoration(
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  CustomeColors
+                                                                      .blue,
+                                                              width: 2),
+                                                    ),
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  CustomeColors
+                                                                      .blue,
+                                                              width: 2),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {},
+                                                style: ElevatedButton.styleFrom(
+                                                    minimumSize:
+                                                        const Size(200, 50),
+                                                    backgroundColor:
+                                                        CustomeColors.blue,
+                                                    foregroundColor:
+                                                        Colors.white),
+                                                child: const Text(
+                                                  'ثبت نظر',
+                                                  style: TextStyle(
+                                                      fontFamily: 'vazir',
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          width: 350,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            border:
+                                Border.all(width: 2, color: CustomeColors.grey),
+                          ),
+                          child: const Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(right: 15),
+                                  child: Text(
+                                    'نظرات کاربران : ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'vazir'),
+                                  ),
+                                ),
+                                Spacer(),
+                                Text(
+                                  'مشاهده',
                                   style: TextStyle(
+                                      color: CustomeColors.blue,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'vazir'),
                                 ),
-                              ),
-                              Spacer(),
-                              Text(
-                                'مشاهده',
-                                style: TextStyle(
-                                    color: CustomeColors.blue,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'vazir'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 20, right: 10),
-                                child: Image(
-                                  image: AssetImage('images/goIn.png'),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 20, right: 10),
+                                  child: Image(
+                                    image: AssetImage('images/goIn.png'),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

@@ -1,6 +1,5 @@
 import 'package:digikala/bloc/homeBloc/HomeEvent.dart';
 import 'package:digikala/bloc/homeBloc/HomeState.dart';
-import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/repository/BannerRepository.dart';
 import 'package:digikala/repository/CategoryRepository.dart';
 import 'package:digikala/repository/ProductRepository.dart';

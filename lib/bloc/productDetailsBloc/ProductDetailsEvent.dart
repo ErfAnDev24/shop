@@ -1,5 +1,3 @@
-import 'package:digikala/models/Product.dart';
-
 class ProductDetailsEvent {}
 
 class RequestProductDetailsEvent extends ProductDetailsEvent {

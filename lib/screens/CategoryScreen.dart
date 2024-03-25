@@ -129,7 +129,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                 );
               } else {
-                return SliverToBoxAdapter(
+                return const SliverToBoxAdapter(
                   child: Text('error'),
                 );
               }

@@ -4,6 +4,7 @@ import 'package:digikala/datasource/AuthenticationRemote.dart';
 import 'package:digikala/datasource/BannerDatasource.dart';
 import 'package:digikala/datasource/CartDatasource.dart';
 import 'package:digikala/datasource/CategoryDatasource.dart';
+import 'package:digikala/datasource/CommentDatasource.dart';
 import 'package:digikala/datasource/ProductDatasource.dart';
 import 'package:digikala/datasource/ProductDetailsDatasource.dart';
 import 'package:digikala/handler/PaymentHandler.dart';
@@ -11,6 +12,7 @@ import 'package:digikala/repository/AuthenticationRepository.dart';
 import 'package:digikala/repository/BannerRepository.dart';
 import 'package:digikala/repository/CartRepository.dart';
 import 'package:digikala/repository/CategoryRepository.dart';
+import 'package:digikala/repository/ICommentRepository.dart';
 import 'package:digikala/repository/ProductDetailsRepository.dart';
 import 'package:digikala/repository/ProductRepository.dart';
 import 'package:dio/dio.dart';
@@ -58,6 +60,8 @@ void initLocators() async {
   locator.registerSingleton<PaymentHandler>(ZarinPalPaymentHandler());
   locator.registerSingleton<CartBloc>(CartBloc());
 
+  locator.registerSingleton<ICommentDatasource>(CommentDatasourceImpl());
+  locator.registerSingleton<ICommentRepository>(CommentRepositoryImpl());
   locator.registerSingleton<SharedPreferences>(
       await SharedPreferences.getInstance());
 }
