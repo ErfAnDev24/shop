@@ -5,6 +5,7 @@ import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/models/Product.dart';
 import 'package:digikala/screens/ProductDetailsScreen.dart';
+import 'package:digikala/util/StringExtention.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -137,15 +138,15 @@ class ProductItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${product.price}',
+                          '${product.price.convertToPrice()}',
                           style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 15,
+                              fontSize: 13,
                               decoration: TextDecoration.lineThrough,
                               fontFamily: 'digits'),
                         ),
                         Text(
-                          '${price}',
+                          '${int.parse(price).convertToPrice()}',
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,

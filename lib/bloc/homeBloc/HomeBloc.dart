@@ -1,17 +1,18 @@
 import 'package:digikala/bloc/homeBloc/HomeEvent.dart';
 import 'package:digikala/bloc/homeBloc/HomeState.dart';
+import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/repository/BannerRepository.dart';
 import 'package:digikala/repository/CategoryRepository.dart';
 import 'package:digikala/repository/ProductRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final IBannerRepository bannerRepository;
-  final ICategoryRepository categoryRepository;
-  final IProductRepository productRepository;
-  HomeBloc(
-      this.bannerRepository, this.categoryRepository, this.productRepository)
-      : super(InitState()) {
+  final IBannerRepository bannerRepository = locator.get<IBannerRepository>();
+  final ICategoryRepository categoryRepository =
+      locator.get<ICategoryRepository>();
+  final IProductRepository productRepository =
+      locator.get<IProductRepository>();
+  HomeBloc() : super(InitState()) {
     on<HomeRequestEvent>(
       (event, emit) async {
         emit(LoadingHomeState());

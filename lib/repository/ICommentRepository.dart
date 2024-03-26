@@ -6,8 +6,7 @@ import 'package:either_dart/either.dart';
 
 abstract class ICommentRepository {
   Future<Either<String, List<Comment>>> commentList(String productId);
-  Future<Either<String, String>> addComment(
-      String comment, String userId, String productId);
+  Future<Either<String, String>> addComment(String comment, String productId);
 }
 
 class CommentRepositoryImpl extends ICommentRepository {
@@ -26,9 +25,9 @@ class CommentRepositoryImpl extends ICommentRepository {
 
   @override
   Future<Either<String, String>> addComment(
-      String comment, String userId, String productId) async {
+      String comment, String productId) async {
     try {
-      var response = await datasource.addComment(comment, userId, productId);
+      var response = await datasource.addComment(comment, productId);
       return Right(response);
     } on ApiException catch (ex) {
       return Left(ex.message);

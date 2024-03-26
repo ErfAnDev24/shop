@@ -1,6 +1,9 @@
 import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/di/ServiceLocator.dart';
+import 'package:digikala/screens/LoginScreen.dart';
 import 'package:digikala/widgets/AccountItem.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -10,6 +13,8 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  final sharePref = locator.get<SharedPreferences>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,18 +69,18 @@ class _AccountScreenState extends State<AccountScreen> {
           const SizedBox(
             height: 20,
           ),
-          const Wrap(
+          Wrap(
             children: [
-              AccountItem(),
-              AccountItem(),
-              AccountItem(),
-              AccountItem(),
-              AccountItem(),
-              AccountItem(),
-              AccountItem(),
-              AccountItem(),
-              AccountItem(),
-              AccountItem(),
+              GestureDetector(
+                onTap: () {
+                  sharePref.clear();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  );
+                },
+                child: const AccountItem(),
+              )
             ],
           ),
           const Spacer(),

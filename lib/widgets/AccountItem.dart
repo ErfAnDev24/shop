@@ -37,11 +37,11 @@ class AccountItem extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 8,
+            height: 10,
           ),
           const Text(
-            'data',
-            style: TextStyle(fontSize: 13),
+            'خروج از حساب',
+            style: TextStyle(fontSize: 13, fontFamily: 'vazir'),
           ),
         ],
       ),

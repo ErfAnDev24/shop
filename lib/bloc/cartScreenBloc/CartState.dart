@@ -7,5 +7,6 @@ class CartLoadingState extends CartState {}
 
 class ResponseCartState extends CartState {
   Either<String, List<SelectedCartItem>> selectedCartItemList;
-  ResponseCartState(this.selectedCartItemList);
+  int totalAmount;
+  ResponseCartState(this.selectedCartItemList,this.totalAmount);
 }

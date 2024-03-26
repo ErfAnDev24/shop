@@ -2,6 +2,8 @@ import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
 import 'package:digikala/bloc/cartScreenBloc/CartEvent.dart';
 import 'package:digikala/bloc/cartScreenBloc/CartState.dart';
 import 'package:digikala/constants/CustomColors.dart';
+import 'package:digikala/util/StringExtention.dart';
+import 'package:digikala/util/extentions.dart';
 import 'package:digikala/widgets/CartItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,13 +45,11 @@ class _CartScreenState extends State<CartScreen> {
               ),
             );
           } else if (state is ResponseCartState) {
+            totalAmount = state.totalAmount;
+
             return state.selectedCartItemList.fold(
               (left) => Text(left),
               (right) {
-                totalAmount = right.fold(
-                    0,
-                    (previousValue, element) =>
-                        previousValue + int.parse(element.price));
                 return CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
@@ -91,7 +91,10 @@ class _CartScreenState extends State<CartScreen> {
                       sliver: SliverList.builder(
                         itemCount: right.length,
                         itemBuilder: (context, index) {
-                          return CartItem(selectedCartItem: right[index]);
+                          return CartItem(
+                            selectedCartItem: right[index],
+                            seletedIndex: index,
+                          );
                         },
                       ),
                     ),
@@ -123,24 +126,27 @@ class _CartScreenState extends State<CartScreen> {
               color: CustomeColors.green,
             ),
             child: Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'تومان',
-                  style: TextStyle(
-                      color: Colors.white, fontFamily: 'vazir', fontSize: 18),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  totalAmount == 0 ? '0' : '$totalAmount',
-                  style: const TextStyle(
-                      color: Colors.white, fontFamily: 'digits', fontSize: 25),
-                ),
-              ],
-            )),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'تومان',
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: 'vazir', fontSize: 18),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    totalAmount == 0 ? '0' : '${totalAmount.convertToPrice()}',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'digits',
+                        fontSize: 25),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

@@ -22,6 +22,10 @@ class AuthenticationRemoteImpl implements IAuthenticationRemote {
         'password': password,
         'passwordConfirm': passwordConfirm,
       });
+
+      if (response.statusCode == 200) {
+        login(username, password);
+      }
     } on Exception catch (ex) {
       throw ApiException('creating user has been faild!');
     }
@@ -38,7 +42,10 @@ class AuthenticationRemoteImpl implements IAuthenticationRemote {
         },
       );
       var sharePref = locator.get<SharedPreferences>();
-      sharePref.setString('access-token', response.data['token']);
+      if (response.statusCode == 200) {
+        sharePref.setString('access-token', response.data['token']);
+        sharePref.setString('user_id', response.data['record']['id']);
+      }
     } catch (ex) {
       throw ApiException('user login has been faild!');
     }

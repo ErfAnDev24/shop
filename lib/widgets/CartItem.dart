@@ -1,13 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
+import 'package:digikala/bloc/cartScreenBloc/CartEvent.dart';
 import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/models/SelectedCartItem.dart';
+import 'package:digikala/util/StringExtention.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartItem extends StatefulWidget {
   SelectedCartItem selectedCartItem;
 
-  CartItem({super.key, required this.selectedCartItem});
+  int seletedIndex;
+
+  CartItem(
+      {super.key, required this.selectedCartItem, required this.seletedIndex});
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -65,7 +72,7 @@ class _CartItemState extends State<CartItem> {
                               child: Row(
                                 children: [
                                   Text(
-                                    '${widget.selectedCartItem.realPrice} تومان',
+                                    '${int.parse(widget.selectedCartItem.realPrice).convertToPrice()} تومان',
                                     style: const TextStyle(
                                         fontFamily: 'digits',
                                         color: CustomeColors.grey,
@@ -108,65 +115,74 @@ class _CartItemState extends State<CartItem> {
                                       color: Colors.white,
                                     ),
                                     child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Text(
-                                            'صورتی',
-                                            style: TextStyle(
-                                                fontFamily: 'vazir',
-                                                fontSize: 12),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Container(
-                                            width: 20,
-                                            height: 20,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.pink,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Container(
-                                    width: 85,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 2, color: CustomeColors.red),
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                    ),
-                                    child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: Transform.scale(
-                                            scale: 1.3,
-                                            child: const Image(
-                                              image: AssetImage(
-                                                  'images/delete.png'),
-                                            ),
-                                          ),
+                                        const Text(
+                                          'صورتی',
+                                          style: TextStyle(
+                                              fontFamily: 'vazir',
+                                              fontSize: 12),
                                         ),
                                         const SizedBox(
-                                          width: 10,
+                                          width: 5,
                                         ),
-                                        const Text(
-                                          'حذف',
-                                          style: TextStyle(fontFamily: 'vazir'),
+                                        Container(
+                                          width: 20,
+                                          height: 20,
+                                          decoration: const BoxDecoration(
+                                            color: Colors.pink,
+                                            shape: BoxShape.circle,
+                                          ),
                                         )
                                       ],
                                     ),
                                   ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      context.read<CartBloc>().add(
+                                          DeleteFromCartEvent(
+                                              widget.seletedIndex));
+                                    },
+                                    child: Container(
+                                      width: 85,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 2, color: CustomeColors.red),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: Transform.scale(
+                                              scale: 1.3,
+                                              child: const Image(
+                                                image: AssetImage(
+                                                    'images/delete.png'),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'حذف',
+                                            style:
+                                                TextStyle(fontFamily: 'vazir'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -215,7 +231,7 @@ class _CartItemState extends State<CartItem> {
                       width: 10,
                     ),
                     Text(
-                      '${widget.selectedCartItem.price}',
+                      '${int.parse(widget.selectedCartItem.price).convertToPrice()}',
                       style:
                           const TextStyle(fontFamily: 'digits', fontSize: 20),
                     ),

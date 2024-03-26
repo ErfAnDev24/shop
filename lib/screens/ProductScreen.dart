@@ -2,7 +2,6 @@ import 'package:digikala/bloc/productScreenBloc/ProductBloc.dart';
 import 'package:digikala/bloc/productScreenBloc/ProductEvent.dart';
 import 'package:digikala/bloc/productScreenBloc/ProductState.dart';
 import 'package:digikala/constants/CustomColors.dart';
-import 'package:digikala/models/Product.dart';
 import 'package:digikala/widgets/ProductItem.dart';
 
 import 'package:flutter/material.dart';

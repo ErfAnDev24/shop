@@ -25,12 +25,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    BlocProvider.of<HomeBloc>(context).add(HomeRequestEvent());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -38,69 +32,73 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xffEEEEEE),
       ),
       backgroundColor: const Color(0xffEEEEEE),
-      body: RefreshIndicator(
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            if (state is LoadingHomeState) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 20,
-                  ),
-                  child: SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: LoadingIndicator(
-                      colors: [CustomeColors.blue],
-                      indicatorType: Indicator.ballRotateChase,
-                    ),
-                  ),
-                ),
-              );
-            } else if (state is HomeResponseState) {
-              return CustomScrollView(
-                slivers: [
-                  const SearchBox(),
-                  state.bannerList.fold(
-                    (left) => const ShowingError(),
-                    (right) {
-                      return BannerWidget(
-                        bannerList: right,
-                      );
-                    },
-                  ),
-                  const CategoryTitleWidget(),
-                  state.categoryList.fold(
-                    (left) => const ShowingError(),
-                    (right) => CategoryList(
-                      categoryList: right,
-                    ),
-                  ),
-                  const MostSoldsTitleWidget(),
-                  state.bestSellerList.fold(
-                    (left) => const ShowingError(),
-                    (right) => ProductList(productList: right),
-                  ),
-                  const MostViewedTitleWidget(),
-                  state.mostViewedList.fold(
-                    (left) => const ShowingError(),
-                    (right) => ProductList(productList: right),
-                  ),
-                ],
-              );
-            }
-            return const Text('error');
-          },
-        ),
-        onRefresh: () {
-          return Future.delayed(
-            const Duration(milliseconds: 1),
-            () {
-              context.read<HomeBloc>().add(HomeRequestEvent());
-            },
-          );
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return getHomeScreenContent(context, state);
         },
       ),
     );
   }
+}
+
+Widget getHomeScreenContent(BuildContext context, HomeState state) {
+  if (state is LoadingHomeState) {
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 20,
+        ),
+        child: SizedBox(
+          width: 80,
+          height: 80,
+          child: LoadingIndicator(
+            colors: [CustomeColors.blue],
+            indicatorType: Indicator.ballRotateChase,
+          ),
+        ),
+      ),
+    );
+  } else if (state is HomeResponseState) {
+    return RefreshIndicator(
+      onRefresh: () {
+        return Future.delayed(
+          const Duration(milliseconds: 1),
+          () {
+            context.read<HomeBloc>().add(HomeRequestEvent());
+          },
+        );
+      },
+      child: CustomScrollView(
+        slivers: [
+          const SearchBox(),
+          state.bannerList.fold(
+            (left) => const ShowingError(),
+            (right) {
+              return BannerWidget(
+                bannerList: right,
+              );
+            },
+          ),
+          const CategoryTitleWidget(),
+          state.categoryList.fold(
+            (left) => const ShowingError(),
+            (right) => CategoryList(
+              categoryList: right,
+            ),
+          ),
+          const MostSoldsTitleWidget(),
+          state.bestSellerList.fold(
+            (left) => const ShowingError(),
+            (right) => ProductList(productList: right),
+          ),
+          const MostViewedTitleWidget(),
+          state.mostViewedList.fold(
+            (left) => const ShowingError(),
+            (right) => ProductList(productList: right),
+          ),
+        ],
+      ),
+    );
+  }
+  return const Text('error');
 }

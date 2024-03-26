@@ -7,16 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class BannerWidget extends StatelessWidget {
+class BannerWidget extends StatefulWidget {
   List<HomeBanner> bannerList;
 
   BannerWidget({super.key, required this.bannerList});
 
   @override
-  Widget build(BuildContext context) {
-    PageController pageController =
-        PageController(viewportFraction: 0.8, initialPage: 1);
+  State<BannerWidget> createState() => _BannerWidgetState();
+}
 
+class _BannerWidgetState extends State<BannerWidget> {
+  PageController pageController =
+      PageController(viewportFraction: 0.8, initialPage: 1);
+  @override
+  Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -27,7 +31,7 @@ class BannerWidget extends StatelessWidget {
             children: [
               PageView.builder(
                 controller: pageController,
-                itemCount: bannerList.length,
+                itemCount: widget.bannerList.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -46,7 +50,8 @@ class BannerWidget extends StatelessWidget {
                                 builder: (context) => BlocProvider(
                                   create: (context) => ProductBloc(),
                                   child: ProductScreen(
-                                    categoryId: bannerList[index].categoryId,
+                                    categoryId:
+                                        widget.bannerList[index].categoryId,
                                     categoryName: 'دسته بندی',
                                   ),
                                 ),
@@ -65,7 +70,7 @@ class BannerWidget extends StatelessWidget {
                                 ),
                               );
                             },
-                            imageUrl: bannerList[index].imageURL,
+                            imageUrl: widget.bannerList[index].imageURL,
                             placeholder: (context, url) {
                               return Container(
                                 width: 100,
@@ -100,5 +105,11 @@ class BannerWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }

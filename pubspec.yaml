@@ -48,6 +48,7 @@ dependencies:
   hive_flutter: ^1.1.0
   zarinpal: ^1.0.5+1
   loading_indicator: ^3.1.1
+  intl: ^0.19.0
   
 
 dev_dependencies:

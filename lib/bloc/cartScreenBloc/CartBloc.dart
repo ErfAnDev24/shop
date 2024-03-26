@@ -11,9 +11,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final paymentHandler = locator.get<PaymentHandler>();
 
   CartBloc() : super(CartLoadingState()) {
-    on<RequestCartEvent>((event, emit) {
+    on<RequestCartEvent>((event, emit) async {
       var response = repository.selecetedCartItemList();
-      emit(ResponseCartState(response));
+      var totalAmount = await repository.totalAmount();
+      emit(ResponseCartState(response, totalAmount));
     });
 
     on<AddProductToCart>((event, emit) {
@@ -43,6 +44,17 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<SendPaymentRequestEvent>(
       (event, emit) {
         paymentHandler.sendPaymentRequest();
+      },
+    );
+
+    on<DeleteFromCartEvent>(
+      (event, emit) async {
+        await repository.deleteFromCart(event.index);
+        var response = repository.selecetedCartItemList();
+        var totalAmount = await repository.totalAmount();
+        emit(
+          ResponseCartState(response, totalAmount),
+        );
       },
     );
   }

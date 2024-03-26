@@ -11,15 +11,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginEvent>((event, emit) async {
       emit(LoadingAuthState());
       var response = await reposiroty.login(event.username, event.password);
+      emit(LoginState(response));
+    });
 
-      response.fold(
-        (left) => emit(
-          LoginState(left),
-        ),
-        (right) => emit(
-          LoginState(right),
-        ),
-      );
+    on<InitAuthEvent>((event, emit) => emit(InitAuthState()));
+
+    on<RegisterEvent>((event, emit) async {
+      var response = await reposiroty.register(
+          event.username, event.password, event.confirmPassword);
+      emit(RegisterState(response));
     });
   }
 }

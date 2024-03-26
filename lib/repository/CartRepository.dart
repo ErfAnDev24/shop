@@ -8,6 +8,10 @@ abstract class ICartRepository {
   Either<String, List<SelectedCartItem>> selecetedCartItemList();
   Future<Either<String, String>> addSelectedCartItem(
       SelectedCartItem selectedCartItem);
+
+  Future<Either<String, String>> deleteFromCart(int index);
+
+  Future<int> totalAmount();
 }
 
 class CartRepositoryImpl extends ICartRepository {
@@ -32,5 +36,20 @@ class CartRepositoryImpl extends ICartRepository {
     } on ApiException catch (ex) {
       return Left(ex.message);
     }
+  }
+
+  @override
+  Future<Either<String, String>> deleteFromCart(int index) async {
+    try {
+      await datasource.deleteFromCart(index);
+      return const Right('your selected item has been deleted');
+    } on ApiException catch (ex) {
+      return Left(ex.message);
+    }
+  }
+
+  @override
+  Future<int> totalAmount() async {
+    return await datasource.totalAmount();
   }
 }

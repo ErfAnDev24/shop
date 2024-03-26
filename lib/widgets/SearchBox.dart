@@ -13,7 +13,7 @@ class _SearchBoxState extends State<SearchBox> {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Container(
           width: 320,
           height: 45,

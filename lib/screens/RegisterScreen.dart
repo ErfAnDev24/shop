@@ -5,24 +5,25 @@ import 'package:digikala/constants/CustomColors.dart';
 import 'package:digikala/di/ServiceLocator.dart';
 import 'package:digikala/repository/AuthenticationRepository.dart';
 import 'package:digikala/screens/DashboardScreen.dart';
-import 'package:digikala/screens/RegisterScreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final repository = locator.get<IAuthenticationRepository>();
 
   TextEditingController usernameController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
+
+  TextEditingController passwordConfirmController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Expanded(
-                flex: 6,
+                flex: 8,
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: Container(
@@ -108,9 +109,35 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(
                             height: 30,
                           ),
+                          TextField(
+                            cursorColor: CustomeColors.blue,
+                            controller: passwordConfirmController,
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2, color: CustomeColors.blue),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2, color: CustomeColors.blue),
+                              ),
+                              labelText: 'تکرار رمز عبور',
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              labelStyle: TextStyle(
+                                  color: CustomeColors.blue,
+                                  fontFamily: 'vazir'),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
                           BlocConsumer<AuthBloc, AuthState>(
                             listener: (context, state) {
-                              if (state is LoginState) {
+                              if (state is RegisterState) {
                                 state.response.fold(
                                   (left) => context
                                       .read<AuthBloc>()
@@ -131,8 +158,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return ElevatedButton(
                                   onPressed: () {
                                     BlocProvider.of<AuthBloc>(context).add(
-                                      LoginEvent(usernameController.text,
-                                          passwordController.text),
+                                      RegisterEvent(
+                                          usernameController.text,
+                                          passwordController.text,
+                                          passwordConfirmController.text),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -141,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     minimumSize: const Size(150, 50),
                                   ),
                                   child: const Text(
-                                    'ورود',
+                                    'ثبت نام',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'vazir',
@@ -160,22 +189,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(
                             height: 30,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const RegisterScreen(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'اگر حساب کاربری ندارید ثبت نام کنید',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 96, 96, 96),
-                                  fontFamily: 'vazir',
-                                  fontSize: 15),
-                            ),
-                          )
                         ],
                       ),
                     ),
@@ -193,6 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     usernameController.dispose();
     passwordController.dispose();
+    passwordConfirmController.dispose();
     super.dispose();
   }
 }
