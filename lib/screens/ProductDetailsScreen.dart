@@ -13,6 +13,7 @@ import 'package:digikala/constants/CustomColors.dart';
 
 import 'package:digikala/models/Product.dart';
 import 'package:digikala/screens/CommentScreen.dart';
+import 'package:digikala/util/StringExtention.dart';
 import 'package:digikala/widgets/Description.dart';
 import 'package:digikala/widgets/PropertyList.dart';
 import 'package:digikala/widgets/VariantComponentGenerator.dart';
@@ -39,6 +40,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int price = widget.product.price;
+    int discountPrice = widget.product.discount_price;
+
+    double discountValue = 100 - (((price - discountPrice) / price) * 100);
     return BlocProvider(
       create: (context) {
         var bloc = ProductDetailsBloc();
@@ -397,12 +402,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                         FontWeight.bold),
                                               ),
                                             ),
-                                            const Column(
+                                            Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  '17800000',
+                                                  '${widget.product.discount_price.convertToPrice()}',
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     fontFamily: 'digits',
@@ -412,7 +417,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '17800000',
+                                                  '${widget.product.price.convertToPrice()}',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     fontFamily: 'digits',
@@ -429,9 +434,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
-                                              child: const Center(
+                                              child: Center(
                                                 child: Text(
-                                                  '%4',
+                                                  '%${discountValue}',
                                                   style: TextStyle(
                                                       fontFamily: 'digits',
                                                       fontSize: 13,

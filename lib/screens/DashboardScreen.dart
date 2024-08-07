@@ -34,93 +34,96 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xffEEEEEE),
-      body: IndexedStack(
-        index: selectedIndex,
-        children: screens(),
-      ),
-      bottomNavigationBar: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
-          child: BottomNavigationBar(
-              selectedLabelStyle: const TextStyle(fontFamily: 'vazir'),
-              unselectedLabelStyle: const TextStyle(fontFamily: 'vazir'),
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              selectedItemColor: CustomeColors.blue,
-              unselectedItemColor: Colors.black,
-              onTap: (value) {
-                setState(
-                  () {
-                    selectedIndex = value;
-                  },
-                );
-              },
-              currentIndex: selectedIndex!,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 3),
-                    child: Image(
-                      image: AssetImage('images/icon_home.png'),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: const Color(0xffEEEEEE),
+        body: IndexedStack(
+          index: selectedIndex,
+          children: screens(),
+        ),
+        bottomNavigationBar: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
+            child: BottomNavigationBar(
+                selectedLabelStyle: const TextStyle(fontFamily: 'vazir'),
+                unselectedLabelStyle: const TextStyle(fontFamily: 'vazir'),
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                selectedItemColor: CustomeColors.blue,
+                unselectedItemColor: Colors.black,
+                onTap: (value) {
+                  setState(
+                    () {
+                      selectedIndex = value;
+                    },
+                  );
+                },
+                currentIndex: selectedIndex!,
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 3),
+                      child: Image(
+                        image: AssetImage('images/icon_home.png'),
+                      ),
+                    ),
+                    label: 'خانه',
+                    activeIcon: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 3),
+                      child: Image(
+                        image: AssetImage('images/icon_home_active.png'),
+                      ),
                     ),
                   ),
-                  label: 'خانه',
-                  activeIcon: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 3),
-                    child: Image(
-                      image: AssetImage('images/icon_home_active.png'),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 3),
+                      child: Image(
+                        image: AssetImage('images/icon_category.png'),
+                      ),
+                    ),
+                    label: 'دسته بندی',
+                    activeIcon: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 3),
+                      child: Image(
+                        image: AssetImage('images/icon_category_active.png'),
+                      ),
                     ),
                   ),
-                ),
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 3),
-                    child: Image(
-                      image: AssetImage('images/icon_category.png'),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 3),
+                      child: Image(
+                        image: AssetImage('images/icon_basket.png'),
+                      ),
+                    ),
+                    label: 'سبد خرید',
+                    activeIcon: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 3),
+                      child: Image(
+                        image: AssetImage('images/icon_basket_active.png'),
+                      ),
                     ),
                   ),
-                  label: 'دسته بندی',
-                  activeIcon: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 3),
-                    child: Image(
-                      image: AssetImage('images/icon_category_active.png'),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 3),
+                      child: Image(
+                        image: AssetImage('images/icon_profile.png'),
+                      ),
+                    ),
+                    label: 'حساب کاربری',
+                    activeIcon: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 3),
+                      child: Image(
+                        image: AssetImage('images/icon_profile_active.png'),
+                      ),
                     ),
                   ),
-                ),
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 3),
-                    child: Image(
-                      image: AssetImage('images/icon_basket.png'),
-                    ),
-                  ),
-                  label: 'سبد خرید',
-                  activeIcon: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 3),
-                    child: Image(
-                      image: AssetImage('images/icon_basket_active.png'),
-                    ),
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 3),
-                    child: Image(
-                      image: AssetImage('images/icon_profile.png'),
-                    ),
-                  ),
-                  label: 'حساب کاربری',
-                  activeIcon: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 3),
-                    child: Image(
-                      image: AssetImage('images/icon_profile_active.png'),
-                    ),
-                  ),
-                ),
-              ]),
+                ]),
+          ),
         ),
       ),
     );

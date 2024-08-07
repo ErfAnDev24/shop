@@ -137,12 +137,16 @@ class _CartScreenState extends State<CartScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    totalAmount == 0 ? '0' : '${totalAmount.convertToPrice()}',
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'digits',
-                        fontSize: 25),
+                  BlocBuilder<CartBloc, CartState>(
+                    builder: (context, state) => Text(
+                      state is ResponseCartState
+                          ? '${state.totalAmount.convertToPrice()}'
+                          : '0',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'digits',
+                          fontSize: 25),
+                    ),
                   ),
                 ],
               ),

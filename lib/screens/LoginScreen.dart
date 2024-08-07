@@ -116,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .read<AuthBloc>()
                                       .add(InitAuthEvent()),
                                   (right) {
-                                    Navigator.of(context).pushReplacement(
+                                    Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             const DashBoardScreen(),

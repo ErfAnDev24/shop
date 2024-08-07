@@ -74,7 +74,7 @@ class _AccountScreenState extends State<AccountScreen> {
               GestureDetector(
                 onTap: () {
                   sharePref.clear();
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context).push(
                     MaterialPageRoute(
                         builder: (context) => const LoginScreen()),
                   );
