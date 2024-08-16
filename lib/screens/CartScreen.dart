@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:digikala/bloc/cartScreenBloc/CartBloc.dart';
 import 'package:digikala/bloc/cartScreenBloc/CartEvent.dart';
 import 'package:digikala/bloc/cartScreenBloc/CartState.dart';
@@ -6,6 +8,7 @@ import 'package:digikala/util/StringExtention.dart';
 import 'package:digikala/util/extentions.dart';
 import 'package:digikala/widgets/CartItem.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartScreen extends StatefulWidget {
@@ -25,130 +28,197 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: const Color(0xffEEEEEE),
-      ),
-      backgroundColor: const Color(0xffEEEEEE),
-      body: BlocBuilder<CartBloc, CartState>(
-        builder: (context, state) {
-          if (state is CartLoadingState) {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: SizedBox(
-                  height: 30,
-                  width: 30,
-                  child: CircularProgressIndicator(),
+    return WillPopScope(
+      onWillPop: () async {
+        bool exitApp = await showDialog(
+          context: context,
+          builder: (context) => Dialog(
+            child: Container(
+              width: 250,
+              height: 150,
+              decoration: BoxDecoration(boxShadow: [
+                const BoxShadow(
+                  color: Colors.black,
+                  blurRadius: 12,
+                  spreadRadius: -12,
+                  offset: Offset(0, 15),
                 ),
+              ], borderRadius: BorderRadius.circular(10), color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'آیا میخواهید از برنامه خارج شوید؟',
+                    style: TextStyle(
+                      fontFamily: 'vazir',
+                      color: CustomeColors.blue,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          SystemNavigator.pop();
+                        },
+                        child: const Text('بله'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: CustomeColors.red,
+                          foregroundColor: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: const Text('خیر'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: CustomeColors.blue,
+                          foregroundColor: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            );
-          } else if (state is ResponseCartState) {
-            totalAmount = state.totalAmount;
+            ),
+          ),
+        );
+        return exitApp ?? false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 0,
+          backgroundColor: const Color(0xffEEEEEE),
+        ),
+        backgroundColor: const Color(0xffEEEEEE),
+        body: BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            if (state is CartLoadingState) {
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              );
+            } else if (state is ResponseCartState) {
+              totalAmount = state.totalAmount;
 
-            return state.selectedCartItemList.fold(
-              (left) => Text(left),
-              (right) {
-                return CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                        child: Container(
-                          width: 360,
-                          height: 45,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Positioned(
-                                  left: 0,
-                                  child: Image(
-                                    image: AssetImage('images/appleLogo.png'),
+              return state.selectedCartItemList.fold(
+                (left) => Text(left),
+                (right) {
+                  return CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Container(
+                            width: 360,
+                            height: 45,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Positioned(
+                                    left: 0,
+                                    child: Image(
+                                      image: AssetImage('images/appleLogo.png'),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  'سبد خرید',
-                                  style: TextStyle(
-                                      color: CustomeColors.blue,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'vazir'),
-                                ),
-                              ],
+                                  Text(
+                                    'سبد خرید',
+                                    style: TextStyle(
+                                        color: CustomeColors.blue,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'vazir'),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
+                      SliverPadding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 10),
+                        sliver: SliverList.builder(
+                          itemCount: right.length,
+                          itemBuilder: (context, index) {
+                            return CartItem(
+                              selectedCartItem: right[index],
+                              seletedIndex: index,
+                            );
+                          },
+                        ),
+                      ),
+                      const SliverPadding(
+                        padding: EdgeInsets.only(bottom: 90),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+
+            return const Text('data');
+          },
+        ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: GestureDetector(
+            onTap: () {
+              //BlocProvider.of<CartBloc>(context).add(InitPaymentRequestEvent()); //zarinpal is off
+
+              //BlocProvider.of<CartBloc>(context).add(SendPaymentRequestEvent()); //zarinpal is off
+            },
+            child: Container(
+              width: 380,
+              height: 75,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: CustomeColors.green,
+              ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'تومان',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'vazir',
+                          fontSize: 18),
                     ),
-                    SliverPadding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 25, vertical: 10),
-                      sliver: SliverList.builder(
-                        itemCount: right.length,
-                        itemBuilder: (context, index) {
-                          return CartItem(
-                            selectedCartItem: right[index],
-                            seletedIndex: index,
-                          );
-                        },
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    BlocBuilder<CartBloc, CartState>(
+                      builder: (context, state) => Text(
+                        state is ResponseCartState
+                            ? '${state.totalAmount.convertToPrice()}'
+                            : '0',
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'digits',
+                            fontSize: 25),
                       ),
                     ),
-                    const SliverPadding(
-                      padding: EdgeInsets.only(bottom: 90),
-                    ),
                   ],
-                );
-              },
-            );
-          }
-
-          return const Text('data');
-        },
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(left: 20),
-        child: GestureDetector(
-          onTap: () {
-            //BlocProvider.of<CartBloc>(context).add(InitPaymentRequestEvent()); //zarinpal is off
-
-            //BlocProvider.of<CartBloc>(context).add(SendPaymentRequestEvent()); //zarinpal is off
-          },
-          child: Container(
-            width: 380,
-            height: 75,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: CustomeColors.green,
-            ),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'تومان',
-                    style: TextStyle(
-                        color: Colors.white, fontFamily: 'vazir', fontSize: 18),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  BlocBuilder<CartBloc, CartState>(
-                    builder: (context, state) => Text(
-                      state is ResponseCartState
-                          ? '${state.totalAmount.convertToPrice()}'
-                          : '0',
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'digits',
-                          fontSize: 25),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

@@ -80,8 +80,13 @@ class _ProductScreenState extends State<ProductScreen> {
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'vazir'),
                                   ),
-                                  const Image(
-                                    image: AssetImage('images/goInBlack.png'),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Image(
+                                      image: AssetImage('images/goInBlack.png'),
+                                    ),
                                   ),
                                 ]),
                           ),

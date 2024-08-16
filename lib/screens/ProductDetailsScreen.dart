@@ -112,10 +112,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              child: Image(
-                                image: AssetImage('images/goInBlack.png'),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15),
+                                child: Image(
+                                  image: AssetImage('images/goInBlack.png'),
+                                ),
                               ),
                             ),
                           ],
